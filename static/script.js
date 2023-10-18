@@ -1,10 +1,14 @@
-var loginButton = document.getElementById("loginButton");
-var registerButton = document.getElementById("registerButton");
+document.addEventListener("DOMContentLoaded", function () {
+	// Your JavaScript code here
 
-loginButton.onclick = function(){
-	document.querySelector("#flipper").classList.toggle("flip");
-}
+	var loginButton = document.getElementById("loginButton");
+	var registerButton = document.getElementById("registerButton");
 
-registerButton.onclick = function(){
-	document.querySelector("#flipper").classList.toggle("flip");
-}
+	loginButton.onclick = function () {
+		document.querySelector("#flipper").classList.toggle("flip");
+	};
+
+	registerButton.onclick = function () {
+		document.querySelector("#flipper").classList.toggle("flip");
+	};
+});

@@ -3,14 +3,15 @@ package database
 import (
 	"database/sql"
 	"time"
+	"forum/middleware"
 )
 
 func RegisterUser(db *sql.DB, username, email, password string) (int64, error) {
 	// Hash the password before inserting it into the database (assuming you've set up bcrypt).
-	// hashedPassword, err := HashPassword(password)
-	// if err != nil {
-	// 	return 0, err
-	// }
+	hashedPassword, err := auth.HashPassword(password)
+	if err != nil {
+		return 0, err
+	}
 
 	// Get the current registration date.
 	registrationDate := time.Now().Format("2006-01-02 15:04:05")
@@ -18,7 +19,7 @@ func RegisterUser(db *sql.DB, username, email, password string) (int64, error) {
 	result, err := db.Exec(`
         INSERT INTO users (username, email, password, registration_date)
         VALUES (?, ?, ?, ?);
-    `, "dolly", "dolly194@yahoo.com", "1234", registrationDate)
+    `, &username, &email, &hashedPassword, registrationDate)
 
 	if err != nil {
 		return 0, err

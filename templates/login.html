@@ -22,9 +22,10 @@
 
             <div class="back">
                 <h1 class="title">Register</h1>
-                <form>
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+                <form action="/register" method="POST">
+                    <input type="text" placeholder="Username" id="username" />
+                    <input type="text" placeholder="Email" id="email" />
+                    <input type="password" placeholder="Password" id="password" />
                     <input type="button" value="Sign up" />
                 </form>
                 <a class="flipbutton" id="registerButton" href="#">Login to my account →</a>
