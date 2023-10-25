@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Forum Main Page</title>
+    <link rel="stylesheet" type="text/css" href="">
+    <!-- You can link to your CSS file here -->
 </head>
+
 <body>
-Welcome to my Forum
+    <header>
+        <h1>Welcome to the Forum</h1>
+    </header>
+
+    <nav>
+        <!-- Add navigation links or categories for your forum -->
+        <ul>
+            <li><a href="#">Cateogory</a></li>
+            <li>
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            </li>
+
+            <!-- Add more categories as needed -->
+        </ul>
+    </nav>
+
+    <!-- Repeat the structure for more posts -->
+
+    <!-- Add a "Create New Post" button or link -->
+    <a href="/create-post">Create New Post</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Your Forum Name</p>
+    </footer>
 </body>
+
 </html>

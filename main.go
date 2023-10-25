@@ -36,6 +36,8 @@ func main() {
 	http.HandleFunc("/loginauth", func(w http.ResponseWriter, r *http.Request) {
 		handlers.LoginSubmitHandler(w, r, db)
 	})
+	http.HandleFunc("/logout", handlers.LogoutHandler)
+
 	fmt.Println("server started on http://localhost:1212")
 	http.ListenAndServe(":1212", nil)
 

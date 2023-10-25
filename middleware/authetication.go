@@ -4,9 +4,13 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
+	"time"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var sessions = make(map[string]int)
 
 func IsDuplicateUser(db *sql.DB, username, email string) bool {
 	// Perform a database query to check if the username or email already exists in the database.
@@ -43,13 +47,40 @@ func GetHashedPassword(db *sql.DB, username string) (string, error) {
 	return hashedPassword, nil
 }
 
-func SetSessionCookie(w http.ResponseWriter, sessionToken string) {
+func SetSessionCookie(w http.ResponseWriter, userID int) {
+	sessionID := uuid.New().String()
 	// Set the session token as a cookie
 	cookie := http.Cookie{
-		Name:  "session",
-		Value: sessionToken,
+		Name:    "session",
+		Value:   sessionID,
+		Expires: time.Now().Add(24 * time.Hour),
 		// You can set other cookie properties such as expiration, path, secure, HttpOnly, etc.
 		HttpOnly: true,
 	}
 	http.SetCookie(w, &cookie)
+
+	sessions[sessionID] = userID
+}
+
+// func GenerateSessionToken(username string) (string, error) {
+// 	// You can use a combination of username, current timestamp, and some secret key
+// 	// to generate a unique session token.
+
+// 	// In this example, we concatenate the username and current timestamp.
+// 	tokenData := username + time.Now().Format("20060102150405")
+
+// 	// You can hash or encrypt the token data for added security.
+// 	// For example, you can use a package like crypto/sha256 or crypto/md5.
+// 	hashedTokenData := sha256.Sum256([]byte(tokenData))
+// 	token := hex.EncodeToString(hashedTokenData[:])
+
+//		return token, nil
+//	}
+func GetAuthenticatedUserID(r *http.Request) (int, bool) {
+	cookie, err := r.Cookie("session")
+	if err != nil {
+		return 0, false
+	}
+	userID, ok := sessions[cookie.Value]
+	return userID, ok
 }

@@ -11,6 +11,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+
+
 func RegisterPageHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/login.html")
 	if err != nil {
@@ -54,7 +56,6 @@ func RegisterSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Session creation failed", http.StatusInternalServerError)
 		return
 	}
-	auth.SetSessionCookie(w, sessionToken)
 	http.Redirect(w, r, "/main-page", http.StatusSeeOther)
 	fmt.Println(userID)
 
@@ -98,8 +99,32 @@ func LoginSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Incorrect username or password", http.StatusUnauthorized)
 		return
 	}
+	userID, err := database.GetIDBYusername(db, username)
+	if err != nil {
+		http.Error(w, "Failed to get user id", http.StatusInternalServerError)
+	}
+	sessionToken := uuid.New().String()
+
+	// Set the session token as a cookie in the response
+	http.SetCookie(w, &http.Cookie{
+		Name:  "session_token",
+		Value: sessionToken,
+		// You can add more settings here like Expires, Secure, HttpOnly, etc.
+	})
 
 	// http.Redirect(w, r, "/profile", http.StatusSeeOther)
 	http.Redirect(w, r, "/main-page", http.StatusSeeOther)
 
+}
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	// Clear the session token by setting the cookie to expire.
+	http.SetCookie(w, &http.Cookie{
+		Name:   "sessionToken",
+		Value:  "",
+		Path:   "/",
+		MaxAge: -1, // Expiration time in seconds (0 or negative value)
+	})
+
+	// Redirect the user to the login page or any other desired page.
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

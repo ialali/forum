@@ -12,7 +12,7 @@
         <div class="flipper" id="flipper">
             <div class="front">
                 <h1 class="title">Login</h1>
-                <form>
+                <form action="/loginauth" method="POST">
                     <input type="text" placeholder="Username" />
                     <input type="password" placeholder="Password" />
                     <input type="button" value="Login" />
@@ -22,7 +22,7 @@
 
             <div class="back">
                 <h1 class="title">Register</h1>
-                <form action="/register" method="POST">
+                <form action="/registerauth" method="POST">
                     <input type="text" placeholder="Username" id="username" />
                     <input type="text" placeholder="Email" id="email" />
                     <input type="password" placeholder="Password" id="password" />
