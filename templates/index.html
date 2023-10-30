@@ -4,36 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <script src="/static/script.js"></script>
+    <title>Forum - Main Page</title>
 </head>
 
 <body>
-    <div class="flip-container">
-        <div class="flipper" id="flipper">
-            <div class="front">
-                <h1 class="title">Login</h1>
-                <form action="/loginauth" method="POST">
-                    <input type="text" placeholder="Username" name="username" />
-                    <input type="password" placeholder="Password" name="password"  />
-                    <input type="submit" value="Login" />
-                </form>
-                <a class="flipbutton" id="loginButton" href="#" onclick="flipForm()">Create my account →</a>
-            </div>
-
-            <div class="back">
-                <h1 class="title">Register</h1>
-                <form action="/registerauth" method="POST">
-                    <input type="text" placeholder="Username" name="username" id="username" />
-                    <input type="email" placeholder="Email" name="email" id="email" />
-                    <input type="password" placeholder="Password" name="password" id="password" />
-                    <input type="submit" value="Sign up" />
-                </form>
-                <a class="flipbutton" id="registerButton" href="#">Login to my account →</a>
-            </div>
-        </div>
-    </div>
+    <header>
+        <h1>Welcome to the Forum</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/create-post">Create Post</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <!-- Display a list of forum posts here -->
+        <section class="forum-posts">
+            <h2>Latest Posts</h2>
+            <ul>
+                <!-- Iterate through your forum posts and display them -->
+                {{range .Post}}
+                <li>
+                    <h3>{{.Title}}</h3>
+                    <p>{{.Content}}</p>
+                    <p>Posted by: {{.Username}}</p>
+                    <p>Category: {{.Category}}</p>
+                </li>
+                {{end}}
+                <!-- Repeat the structure for each post -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Your Forum Name</p>
+    </footer>
 </body>
 
 </html>

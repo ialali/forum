@@ -7,14 +7,14 @@ import (
 	auth "forum/middleware"
 	"net/http"
 	"text/template"
+	"time"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-
-
 func RegisterPageHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("templates/login.html")
+	tmpl, err := template.ParseFiles("templates/register.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
@@ -50,19 +50,24 @@ func RegisterSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Registration Failure", http.StatusInternalServerError)
 		return // Return to exit the function
 	}
-	// Generate a session token (you should implement this)
-	sessionToken, err := auth.GenerateSessionToken(username)
-	if err != nil {
-		http.Error(w, "Session creation failed", http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, "/main-page", http.StatusSeeOther)
+	sessionToken := uuid.New().String()
+
+	// Set the session token as a cookie in the response
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    sessionToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		// You can add more settings here like Expires, Secure, HttpOnly, etc.
+	})
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 	fmt.Println(userID)
 
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("templates/index.html")
+	tmpl, err := template.ParseFiles("templates/login.html")
 	if err != nil {
 		http.Error(w, "Error rendering login page", http.StatusInternalServerError)
 		return
@@ -103,17 +108,20 @@ func LoginSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if err != nil {
 		http.Error(w, "Failed to get user id", http.StatusInternalServerError)
 	}
+	fmt.Println(userID)
 	sessionToken := uuid.New().String()
 
 	// Set the session token as a cookie in the response
 	http.SetCookie(w, &http.Cookie{
-		Name:  "session_token",
-		Value: sessionToken,
+		Name:     "session_token",
+		Value:    sessionToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
 		// You can add more settings here like Expires, Secure, HttpOnly, etc.
 	})
 
 	// http.Redirect(w, r, "/profile", http.StatusSeeOther)
-	http.Redirect(w, r, "/main-page", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 
 }
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {

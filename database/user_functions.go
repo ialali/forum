@@ -3,7 +3,14 @@ package database
 import (
 	"database/sql"
 	auth "forum/middleware"
+	"net/http"
+	"sync"
 	"time"
+)
+
+var (
+	sessions = make(map[string]int)
+	mu       sync.Mutex
 )
 
 func RegisterUser(db *sql.DB, username, email, password string) (int64, error) {
@@ -64,25 +71,41 @@ func GetIDBYusername(db *sql.DB, username string) (User, error) {
 	}
 	return user, nil
 }
+func GetAuthenticatedUserID(r *http.Request) (int, bool) {
+	// Check if the user is authenticated by looking for a session token.
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		// No session token found, the user is not authenticated.
+		return 0, false
+	}
+
+	// Retrieve the session token from the cookie.
+	sessionToken := cookie.Value
+
+	// Look up the user's ID associated with the session token.
+	userID, ok := sessions[sessionToken]
+	return userID, ok
+}
 
 // CreatePost inserts a new post into the database and returns the post ID.
-func InsertPost(db *sql.DB, username, title, content, category string) (int64, error) {
-	// Get the current timestamp for the post
-	postTime := time.Now().Format("2006-01-02 15:04:05")
+func InsertPost(db *sql.DB,category, title, content string, userID int) error {
+	// You should also add additional error handling and validation as needed.
 
-	result, err := db.Exec(`
-        INSERT INTO posts (username, title, content, category, post_time)
-        VALUES (?, ?, ?, ?, ?);
-    `, username, title, content, category, postTime)
-
+	// Prepare the SQL statement to insert a new post.
+	stmt, err := db.Prepare("INSERT INTO posts (title, content, user_id, created_at) VALUES (?, ?, ?, ?)")
 	if err != nil {
-		return 0, err
+		return err
+	}
+	defer stmt.Close()
+
+	// Get the current timestamp.
+	createdAt := time.Now()
+
+	// Execute the SQL statement to insert the new post.
+	_, err = stmt.Exec(title, content, userID, createdAt)
+	if err != nil {
+		return err
 	}
 
-	postID, err := result.LastInsertId()
-	if err != nil {
-		return 0, err
-	}
-
-	return postID, nil
+	return nil
 }

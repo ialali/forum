@@ -4,34 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script src="/static/script.js"></script>
 </head>
 
 <body>
-    <div class="flip-container">
-        <div class="flipper" id="flipper">
-            <div class="front">
-                <h1 class="title">Login</h1>
-                <form action="/loginauth" method="POST">
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
-                    <input type="button" value="Login" />
-                </form>
-                <a class="flipbutton" id="loginButton" href="#">Create my account →</a>
-            </div>
-
-            <div class="back">
-                <h1 class="title">Register</h1>
-                <form action="/registerauth" method="POST">
-                    <input type="text" placeholder="Username" id="username" />
-                    <input type="text" placeholder="Email" id="email" />
-                    <input type="password" placeholder="Password" id="password" />
-                    <input type="button" value="Sign up" />
-                </form>
-                <a class="flipbutton" id="registerButton" href="#">Login to my account →</a>
-            </div>
-        </div>
-    </div>
+    <h1 class="title">Login</h1>
+    <form action="/loginauth" method="POST">
+        <input type="text" placeholder="Username" name="username" />
+        <input type="password" placeholder="Password" name="password" />
+        <input type="submit" value="Login" />
+    </form>
+    <a class="flipbutton" id="loginButton" href="#" onclick="flipForm()">Create my account →</a>
 </body>
 
 </html>

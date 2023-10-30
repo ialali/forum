@@ -23,22 +23,22 @@ func OpenDatabase(dbPath string) (*sql.DB, error) {
 
 // InitializeSchema creates the database tables.
 func InitializeSchema(db *sql.DB) error {
-    // Create the 'users' table
-    _, err := db.Exec(`
+	// Create the 'users' table
+	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
-            username TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL UNIQUE,
             password TEXT NOT NULL,
             registration_date DATETIME
         );
     `)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    // Create the 'posts' table with foreign key
-    _, err = db.Exec(`
+	// Create the 'posts' table with foreign key
+	_, err = db.Exec(`
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
@@ -47,12 +47,12 @@ func InitializeSchema(db *sql.DB) error {
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
     `)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    // Create the 'comments' table with foreign keys
-    _, err = db.Exec(`
+	// Create the 'comments' table with foreign keys
+	_, err = db.Exec(`
         CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
@@ -63,23 +63,23 @@ func InitializeSchema(db *sql.DB) error {
             FOREIGN KEY (post_id) REFERENCES posts(id)
         );
     `)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    // Create the 'categories' table
-    _, err = db.Exec(`
+	// Create the 'categories' table
+	_, err = db.Exec(`
         CREATE TABLE IF NOT EXISTS categories (
             id INTEGER PRIMARY KEY,
             name TEXT
         );
     `)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    // Create the 'likes' table
-    _, err = db.Exec(`
+	// Create the 'likes' table
+	_, err = db.Exec(`
         CREATE TABLE IF NOT EXISTS likes (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
@@ -87,9 +87,9 @@ func InitializeSchema(db *sql.DB) error {
             item_type TEXT
         );
     `)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    return nil
+	return nil
 }
