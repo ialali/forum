@@ -23,7 +23,7 @@ func AddPostSubmit(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	// Check if the user is authenticated
-	userID, isAuthenticated := database.GetAuthenticatedUserID(r)
+	userID, isAuthenticated := GetAuthenticatedUserID(r)
 	if !isAuthenticated {
 		// Redirect to the login page or show an error message.
 		http.Error(w, "User not authenticated", http.StatusUnauthorized)

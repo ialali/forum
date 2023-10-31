@@ -42,8 +42,9 @@ func InitializeSchema(db *sql.DB) error {
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
+			title TEXT,
             content TEXT,
-            creation_date DATETIME,
+			created_at DATETIME,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
     `)

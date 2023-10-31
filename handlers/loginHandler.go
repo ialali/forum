@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/database"
 	auth "forum/middleware"
 	"log"
@@ -60,29 +59,82 @@ func LoginSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 	userID, err := database.GetIDBYusername(db, username)
 	if err != nil {
-		http.Error(w, "Failed to get user id", http.StatusInternalServerError)
+		log.Println("Error getting user ID:", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
 	}
-	fmt.Println(userID)
-	sessionToken := uuid.New().String()
-	log.Println("Generated session token:", sessionToken)
+	log.Println("User ID:", userID)
 
-	// Store the session token in your server (assuming you have sessions and userSessions maps)
+	// Generate a new UUID for the session
+	sessionToken := uuid.New().String()
+
 	mu.Lock()
 	defer mu.Unlock()
+
+	// Check if the user already has an active session
+	if existingSessionID, ok := userSessions[userID]; ok {
+		// If so, remove the existing session
+		delete(userSessions, userID)
+		log.Printf("Removed existing session for user %d\n", userID)
+		// Also delete the session from the sessions map
+		delete(sessions, existingSessionID)
+	}
+
 	// Store the session ID and user ID in their respective maps
 	userSessions[userID] = sessionToken
 	sessions[sessionToken] = userID
+	log.Println(sessions)
+	log.Println(sessionToken)
 
-	// Set the session token as a cookie in the response
-	http.SetCookie(w, &http.Cookie{
+	// Store the session ID in a cookie with an expiration time
+	expiration := time.Now().Add(24 * time.Hour) // 24 hours
+	cookie := http.Cookie{
 		Name:     "session_token",
 		Value:    sessionToken,
-		Expires:  time.Now().Add(24 * time.Hour), // Adjust the expiration time
+		Path:     "/",
+		Expires:  expiration,
 		HttpOnly: true,
-		// You can add more settings here like Secure, SameSite, etc.
-	})
+		Secure:   true, // Enable only in production with HTTPS
+	}
 
-	// Redirect the user after successful login
+	http.SetCookie(w, &cookie)
+
+	// Redirect the user to the home page after successful login
 	http.Redirect(w, r, "/", http.StatusSeeOther)
-	log.Println(sessions)
+	return
+}
+func IsAuthenticated(r *http.Request) bool {
+	// Check if the user is authenticated by looking for a session token.
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		// No session token found, the user is not authenticated.
+		log.Println("No session token found.")
+		return false
+	}
+
+	// Retrieve the session token from the cookie.
+	sessionToken := cookie.Value
+	log.Println("Retrieved session token:", sessionToken)
+
+	// Look up the user's ID associated with the session token.
+	mu.Lock()
+	defer mu.Unlock()
+	_, ok := sessions[sessionToken]
+
+	if ok {
+		log.Println("User is authenticated.")
+	} else {
+		log.Println("User is not authenticated.")
+	}
+
+	// If the session token is found in the sessions map, the user is authenticated.
+	return ok
+}
+func GetAuthenticatedUserID(r *http.Request) (int, bool) {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		return 0, false
+	}
+	userID, ok := sessions[cookie.Value]
+	return userID, ok
 }
