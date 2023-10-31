@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	auth "forum/middleware"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -63,19 +64,21 @@ func GetUserByEmail(db *sql.DB, email string) (User, error) {
 	}
 	return user, nil
 }
-func GetIDBYusername(db *sql.DB, username string) (User, error) {
-	var user User
-	err := db.QueryRow(`SELECT id FROM users WHERE username = ?`, username).Scan(&user.ID)
+func GetIDBYusername(db *sql.DB, username string) (int, error) {
+	var userID int
+	err := db.QueryRow("SELECT id FROM users WHERE username = ?", username).Scan(&userID)
 	if err != nil {
-		return User{}, err
+		return 0, err
 	}
-	return user, nil
+	return userID, nil
 }
+
 func GetAuthenticatedUserID(r *http.Request) (int, bool) {
 	// Check if the user is authenticated by looking for a session token.
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		// No session token found, the user is not authenticated.
+		log.Println("No session token found.")
 		return 0, false
 	}
 
@@ -83,12 +86,22 @@ func GetAuthenticatedUserID(r *http.Request) (int, bool) {
 	sessionToken := cookie.Value
 
 	// Look up the user's ID associated with the session token.
+	mu.Lock()
+	defer mu.Unlock()
 	userID, ok := sessions[sessionToken]
+
+	if ok {
+		log.Printf("User is authenticated. UserID: %d\n", userID)
+	} else {
+		log.Println("User is not authenticated.")
+	}
+
+	// If the session token is found in the sessions map, the user is authenticated.
 	return userID, ok
 }
 
 // CreatePost inserts a new post into the database and returns the post ID.
-func InsertPost(db *sql.DB,category, title, content string, userID int) error {
+func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 	// You should also add additional error handling and validation as needed.
 
 	// Prepare the SQL statement to insert a new post.

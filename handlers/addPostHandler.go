@@ -17,22 +17,25 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func AddPostSubmit(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-	// TODO: Implement this function to add a post to the database
 	if r.Method != "POST" {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
 	}
+
+	// Check if the user is authenticated
+	userID, isAuthenticated := database.GetAuthenticatedUserID(r)
+	if !isAuthenticated {
+		// Redirect to the login page or show an error message.
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
 	category := r.FormValue("category")
 	title := r.FormValue("title")
 	content := r.FormValue("content")
 
 	if category == "" || title == "" || content == "" {
 		http.Error(w, "Missing required fields", http.StatusUnprocessableEntity)
-	}
-	userID, isAuthenticated := database.GetAuthenticatedUserID(r)
-	if !isAuthenticated {
-		// Redirect to the login page or show an error message.
-		// http.Redirect(w, r, "/login", http.StatusSeeOther)
-		http.Error(w, "user not registered", http.StatusInternalServerError)
 		return
 	}
 
@@ -60,16 +63,16 @@ func AddPostSubmit(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			log.Println(err)
 			return
 		}
-	}
 
-	// Add the post to the database
-	err = database.InsertPost(db, category, title, content, userID)
-	if err != nil {
-		log.Println("Error inserting post:", err)
-		http.Redirect(w, r, "/error/500", http.StatusSeeOther)
-		return
-	}
+		// Add the post to the database
+		err = database.InsertPost(db, category, title, content, userID)
+		if err != nil {
+			log.Println("Error inserting post:", err)
+			http.Redirect(w, r, "/error/500", http.StatusSeeOther)
+			return
+		}
 
-	// Redirect the user to the home page after successfully adding the post
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+		// Redirect the user to the home page after successfully adding the post
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
 }

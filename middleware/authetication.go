@@ -3,14 +3,19 @@ package auth
 import (
 	"database/sql"
 	"errors"
+	"log"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var sessions = make(map[string]int)
+var (
+	sessions = make(map[string]int)
+	mu       sync.Mutex
+)
 
 func IsDuplicateUser(db *sql.DB, username, email string) bool {
 	// Perform a database query to check if the username or email already exists in the database.
@@ -77,10 +82,37 @@ func SetSessionCookie(w http.ResponseWriter, userID int) {
 //		return token, nil
 //	}
 func GetAuthenticatedUserID(r *http.Request) (int, bool) {
-	cookie, err := r.Cookie("session")
+	cookie, err := r.Cookie("session-name")
 	if err != nil {
 		return 0, false
 	}
 	userID, ok := sessions[cookie.Value]
 	return userID, ok
+}
+func IsAuthenticated(r *http.Request) bool {
+	// Check if the user is authenticated by looking for a session token.
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		// No session token found, the user is not authenticated.
+		log.Println("No session token found.")
+		return false
+	}
+
+	// Retrieve the session token from the cookie.
+	sessionToken := cookie.Value
+	log.Println("Retrieved session token:", sessionToken)
+
+	// Look up the user's ID associated with the session token.
+	mu.Lock()
+	defer mu.Unlock()
+	_, ok := sessions[sessionToken]
+
+	if ok {
+		log.Println("User is authenticated.")
+	} else {
+		log.Println("User is not authenticated.")
+	}
+
+	// If the session token is found in the sessions map, the user is authenticated.
+	return ok
 }
