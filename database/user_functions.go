@@ -2,6 +2,8 @@ package database
 
 import (
 	"database/sql"
+	"log"
+
 	auth "forum/middleware"
 	"time"
 )
@@ -70,7 +72,7 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 	// You should also add additional error handling and validation as needed.
 
 	// Prepare the SQL statement to insert a new post.
-	stmt, err := db.Prepare("INSERT INTO posts (title, content, user_id, created_at) VALUES (?, ?, ?, ?)")
+	stmt, err := db.Prepare("INSERT INTO posts (title, content, user_id, category) VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
@@ -86,4 +88,33 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 	}
 
 	return nil
+}
+
+func GetPosts(db *sql.DB) ([]Post, error) {
+	var posts []Post
+
+	// Query to retrieve posts
+	rows, err := db.Query("SELECT id, title, content, user_id FROM posts")
+	if err != nil {
+		log.Printf("Error querying posts: %v\n", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var post Post
+		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.UserID); err != nil {
+			log.Printf("Error scanning row: %v\n", err)
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Printf("Error reading rows: %v\n", err)
+		return nil, err
+	}
+
+	log.Printf("Fetched %d posts from the database.\n", len(posts))
+	return posts, nil
 }

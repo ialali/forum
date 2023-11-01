@@ -44,6 +44,7 @@ func InitializeSchema(db *sql.DB) error {
             user_id INTEGER,
 			title TEXT,
             content TEXT,
+			category TEXT,
 			created_at DATETIME,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
