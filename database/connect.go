@@ -27,7 +27,7 @@ func InitializeSchema(db *sql.DB) error {
 	_, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
-            username TEXT UNIQUE NOT NULL,
+            username TEXT  NOT NULL,
             email TEXT UNIQUE NOT NULL UNIQUE,
             password TEXT NOT NULL,
             registration_date DATETIME
@@ -39,8 +39,8 @@ func InitializeSchema(db *sql.DB) error {
 
 	// Create the 'posts' table with foreign key
 	_, err = db.Exec(`
-        CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS post (
+            post_id INTEGER PRIMARY KEY,
             user_id INTEGER,
 			title TEXT,
             content TEXT,

@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"log"
 
 	auth "forum/middleware"
 	"time"
@@ -94,27 +93,27 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
 
 	// Query to retrieve posts
-	rows, err := db.Query("SELECT id, title, content, user_id FROM posts")
+	// rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON post users.id")s.user_id =
+	rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id")
+
 	if err != nil {
-		log.Printf("Error querying posts: %v\n", err)
 		return nil, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var post Post
-		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.UserID); err != nil {
-			log.Printf("Error scanning row: %v\n", err)
+
+		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
+
 			return nil, err
 		}
 		posts = append(posts, post)
 	}
 
 	if err := rows.Err(); err != nil {
-		log.Printf("Error reading rows: %v\n", err)
 		return nil, err
 	}
 
-	log.Printf("Fetched %d posts from the database.\n", len(posts))
 	return posts, nil
 }

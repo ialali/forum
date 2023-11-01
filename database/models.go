@@ -9,11 +9,14 @@ type User struct {
 }
 
 type Post struct {
-	ID           int
-	UserID       int
-	Title        string
-	Content      string
+	ID       int
+	UserID   int
+	Title    string
+	Content  string
+	Category string
+
 	CreationDate string
+	Username     string
 }
 type Comment struct {
 	ID           int

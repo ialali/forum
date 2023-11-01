@@ -27,7 +27,7 @@ func AddPostSubmit(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if !isAuthenticated {
 		// Redirect to the login page or show an error message.
 		http.Error(w, "User not authenticated", http.StatusUnauthorized)
-		return
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 
 	category := r.FormValue("category")

@@ -26,7 +26,9 @@ func main() {
 		log.Fatal(err)
 	}
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", handlers.IndexPageHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		handlers.ShowPostHandler(w, r, db)
+	})
 
 	http.HandleFunc("/register", handlers.RegisterPageHandler)
 	http.HandleFunc("/registerauth", func(w http.ResponseWriter, r *http.Request) {
