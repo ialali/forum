@@ -10,7 +10,7 @@ import (
 
 func AddCommentHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if r.Method == http.MethodPost {
-		userData := database.GetAuthenticatedUserData(db, r)
+		userData := GetAuthenticatedUserData(db, r)
 		if !userData.IsAuthenticated {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
@@ -36,4 +36,24 @@ func AddCommentHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+}
+func GetAuthenticatedUserData(db *sql.DB, r *http.Request) struct {
+	IsAuthenticated bool
+	Username        string
+} {
+	userID, ok := GetAuthenticatedUserID(r)
+	if !ok {
+		return struct {
+			IsAuthenticated bool
+			Username        string
+		}{false, ""}
+	}
+	user, err := database.GetUserByID(db, userID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return struct {
+		IsAuthenticated bool
+		Username        string
+	}{true, user.Username}
 }
