@@ -2,10 +2,18 @@ package database
 
 import (
 	"database/sql"
+	"log"
+	"net/http"
 
+	"forum/handlers"
 	auth "forum/middleware"
 	"time"
 )
+
+type AuthUserData struct {
+	IsAuthenticated bool
+	Username        string
+}
 
 func RegisterUser(db *sql.DB, username, email, password string) (int64, error) {
 	// Hash the password before inserting it into the database (assuming you've set up bcrypt).
@@ -116,4 +124,27 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 	}
 
 	return posts, nil
+}
+
+func InsertComment(db *sql.DB, postID, userID int, content string) error {
+	_, err := db.Exec("INSERT INTO comments (user_id, post_id, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+		userID, postID, content, time.Now(), time.Now())
+	return err
+}
+func GetAuthenticatedUserData(db *sql.DB, r *http.Request) AuthUserData {
+	userID, ok := handlers.GetAuthenticatedUserID(r)
+	if !ok {
+		return struct {
+			IsAuthenticated bool
+			Username        string
+		}{false, ""}
+	}
+	user, err := GetUserByID(db, userID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return struct {
+		IsAuthenticated bool
+		Username        string
+	}{true, user.Username}
 }
