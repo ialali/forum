@@ -48,7 +48,7 @@ func GetAuthenticatedUserData(db *sql.DB, r *http.Request) struct {
 			Username        string
 		}{false, ""}
 	}
-	user, err := database.GetUserByID(db, userID)
+	user, err := database.GetUserByID(db, userID) // Use db here if it's in scope.
 	if err != nil {
 		log.Fatal(err)
 	}

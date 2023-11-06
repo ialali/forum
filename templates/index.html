@@ -31,14 +31,50 @@
                 <h3>{{.Title}}</h3>
                 <p>{{.Content}}</p>
                 <p>Posted by Username: {{.Username}}</p>
-                <p> {{.UserID}}</p>
-                <form method="POST" action="/add-comment">
+                <p> Hello :{{.UserID}}</p>
+                <!-- <p>Likes: {{.Likes}}, Dislikes: {{.Dislikes}}</p>
+                <form method="POST" action="/like-post">
                     <input type="hidden" name="post_id" value="{{.ID}}">
-                    <input type="text" name="content" placeholder="Add a comment">
-                    <button type="submit">Submit</button>
+                    <input type="hidden" name="like" value="1">
+                    <button type="submit">Like</button>
                 </form>
+                <form method="POST" action="/dislike-post">
+                    <input type="hidden" name="post_id" value="{{.ID}}">
+                    <input type="hidden" name="like" value="0">
+                    <button type="submit">Dislike</button>
+                </form> -->
 
-                {{end}}
+                <!-- Display comments for this post -->
+                <!-- <ul>
+                    {{range .Comments}}
+                    <li>{{.Content}}</li>
+                    <li>Commented by: {{.Commenter}}</li>
+                    <li>Likes: {{.Likes}}, Dislikes: {{.Dislikes}}</li>
+                    <form method="POST" action="/like-comment">
+                        <input type="hidden" name="comment_id" value="{{.CommentID}}">
+                        <input type="hidden" name="like" value="1">
+                        <button type="submit">Like</button>
+                    </form>
+                    <form method="POST" action="/dislike-comment">
+                        <input type="hidden" name="comment_id" value="{{.CommentID}}">
+                        <input type="hidden" name="like" value="0">
+                        <button type="submit">Dislike</button>
+                    </form>
+                    
+                 -->
+                 {{end}}
+
+            </ul>
+
+            <!-- Form to add a comment -->
+            <form method="POST" action="/add-comment">
+                <input type="hidden" name="post_id" value="{{.ID}}">
+                <input type="text" name="content" placeholder="Add a comment">
+                <button type="submit">Submit</button>
+            </form>
+
+            <!-- ... -->
+            {{end}}
             </ul>
             <!-- Repeat the structure for each post -->
             </ul>

@@ -40,8 +40,14 @@ func main() {
 	})
 	http.HandleFunc("/logout", handlers.LogoutHandler)
 	http.HandleFunc("/create-post", handlers.AddPost)
-	http.HandleFunc("/addpost", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/add-post", func(w http.ResponseWriter, r *http.Request) {
 		handlers.AddPostSubmit(w, r, db)
+	})
+	http.HandleFunc("/add-comment", func(w http.ResponseWriter, r *http.Request) {
+		handlers.AddCommentHandler(w, r, db)
+	})
+	http.HandleFunc("/like-post", func(w http.ResponseWriter, r *http.Request) {
+		handlers.LikePostHandler(w, r, db)
 	})
 
 	fmt.Println("server started on http://localhost:1212")

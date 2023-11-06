@@ -39,7 +39,7 @@ func InitializeSchema(db *sql.DB) error {
 
 	// Create the 'posts' table with foreign key
 	_, err = db.Exec(`
-        CREATE TABLE IF NOT EXISTS post (
+        CREATE TABLE IF NOT EXISTS posts (
             post_id INTEGER PRIMARY KEY,
             user_id INTEGER,
 			title TEXT,
@@ -82,16 +82,35 @@ func InitializeSchema(db *sql.DB) error {
 
 	// Create the 'likes' table
 	_, err = db.Exec(`
-        CREATE TABLE IF NOT EXISTS likes (
+        CREATE TABLE IF NOT EXISTS post_likes (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
-            item_id INTEGER,
-            item_type TEXT
+            post_id INTEGER,
+            like_status BOOLEAN,
+            like INTEGER DEFAULT 0,
+			FOREIGN KEY (user_id) REFERENCES users(id),
+			FOREIGN KEY (post_id) REFERENCES posts(id) 
         );
     `)
 	if err != nil {
 		return err
 	}
+	
+	_, err = db.Exec(`
+        CREATE TABLE IF NOT EXISTS comments_likes (
+            id INTEGER PRIMARY KEY,
+            user_id INTEGER,
+            comment_id INTEGER,
+            like_status BOOLEAN,
+            like INTEGER DEFAULT 0,
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (comment_id) REFERENCES comments(id)
+        );
+    `)
+	if err != nil {
+		return err
+	}
+	
 
 	return nil
 }
