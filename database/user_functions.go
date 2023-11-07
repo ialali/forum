@@ -123,7 +123,7 @@ func InsertComment(db *sql.DB, postID, userID int, content string) error {
 }
 func GetCommentsForPost(db *sql.DB, postID int) ([]Comment, error) {
 	var comments []Comment
-	rows, err := db.Query("SELECT comments.id, comments.post_id, comments.user_id, comments.content, comments.created_at, users.username FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.post_id = ?", postID)
+	rows, err := db.Query("SELECT comments.id, comments.post_id, comments.user_id, comments.content, comments.creation_date, users.username FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.post_id = ?", postID)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func GetCommentsForPost(db *sql.DB, postID int) ([]Comment, error) {
 
 	for rows.Next() {
 		var comment Comment
-		err := rows.Scan(&comment.ID, &comment.PostID, &comment.UserID, comment.Content, &comment.CreationDate, &comment.Username)
+		err := rows.Scan(&comment.ID, &comment.PostID, &comment.UserID, &comment.Content, &comment.CreationDate, &comment.Username)
 		if err != nil {
 			return nil, err
 		}
@@ -154,7 +154,7 @@ func InsertPostLike(db *sql.DB, userID, postID int) error {
 		return err
 	} else {
 		if likeStatus {
-			_, err := db.Exec("DELETE FROM post_likes WHERE user_id = ? and post_id = ?", userID, postID)
+			_, err := db.Exec("DELETE FROM post_likes WHERE user_id = ? AND post_id = ?", userID, postID)
 			return err
 		} else {
 			_, err := db.Exec("UPDATE post_likes SET like_status = ?, like = like + 1 WHERE user_id = ? AND post_id = ?", true, userID, postID)
@@ -162,9 +162,99 @@ func InsertPostLike(db *sql.DB, userID, postID int) error {
 		}
 	}
 }
+func InsertPostDislike(db *sql.DB, userID, postID int) error {
+	var likeStatus bool
 
-// func InsertDislikePost(db *sql.DB, userID, postID int) error {
-// 	var likeStatus bool
-// 	err := db.Query("SELECT like_status FROM post_likes WHERE user_id = ? AND post_id = ?", userID, postID).Scan()
-// 	return err
-// }
+	err := db.QueryRow("SELECT like_status FROM post_likes WHERE user_id = ? AND post_id = ?", userID, postID).Scan(&likeStatus)
+	if err == sql.ErrNoRows {
+		_, err := db.Exec("INSERT INTO post_likes (user_id, post_id, like_status, like) VALUES (?, ?, ?, ?)", userID, postID, false, -1)
+		return err
+	} else if err != nil {
+		return err
+	} else {
+		if likeStatus {
+			_, err := db.Exec("DELETE FROM post_likes WHERE user_id = ? AND post_id = ?", userID, postID)
+			return err
+		} else {
+			_, err := db.Exec("UPDATE post_likes SET like_status = ?, like = like + 1 WHERE user_id = ? AND post_id = ?", false, userID, postID)
+			return err
+		}
+	}
+}
+
+func GetPostLikesCount(db *sql.DB, postID int) (int, int, error) {
+	var likeCount, dislikeCount int
+
+	// Query for likes count
+	err := db.QueryRow("SELECT COUNT(*) FROM post_likes WHERE post_id = ? AND like_status = ?", postID, true).Scan(&likeCount)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	// Query for dislikes count
+	err = db.QueryRow("SELECT COUNT(*) FROM post_likes WHERE post_id = ? AND like_status = ?", postID, false).Scan(&dislikeCount)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return likeCount, dislikeCount, nil
+}
+
+func InsertCommentLike(db *sql.DB, userID, commentID int) error {
+	var likeStatus bool
+
+	err := db.QueryRow("SELECT like_status FROM comments_likes WHERE user_id = ? AND comment_id = ?", userID, commentID).Scan(&likeStatus)
+	if err == sql.ErrNoRows {
+		_, err := db.Exec("INSERT INTO comments_likes (user_id, comment_id, like_status, like) VALUES (?, ?, ?, ?)", userID, commentID, true, 1)
+		return err
+	} else if err != nil {
+		return err
+	} else {
+		if likeStatus {
+			_, err := db.Exec("DELETE FROM comments_likes WHERE user_id = ? AND comment_id = ?", userID, commentID)
+			return err
+		} else {
+			_, err := db.Exec("UPDATE comments_likes SET like_status = ?, like = like + 1 WHERE user_id = ? AND comment_id = ?", true, userID, commentID)
+			return err
+		}
+	}
+}
+
+func InsertCommentDislike(db *sql.DB, userID, commentID int) error {
+	var likeStatus bool
+
+	err := db.QueryRow("SELECT like_status FROM comments_likes WHERE user_id = ? AND comment_id = ?", userID, commentID).Scan(&likeStatus)
+	if err == sql.ErrNoRows {
+		_, err := db.Exec("INSERT INTO comments_likes (user_id, comment_id, like_status, like) VALUES (?, ?, ?, ?)", userID, commentID, false, -1)
+		return err
+	} else if err != nil {
+		return err
+	} else {
+		if likeStatus {
+			_, err := db.Exec("DELETE FROM comments_likes WHERE user_id = ? AND comment_id = ?", userID, commentID)
+			return err
+		} else {
+			_, err := db.Exec("UPDATE comments_likes SET like_status = ?, like = like + 1 WHERE user_id = ? AND comment_id = ?", false, userID, commentID)
+			return err
+		}
+	}
+}
+
+func GetCommentLikesCount(db *sql.DB, postID int) (int, int, error) {
+	var likeCount, dislikeCount int
+
+	// Query for likes count
+	err := db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE post_id = ? AND like_status = ?", postID, true).Scan(&likeCount)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	// Query for dislikes count
+	err = db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE post_id = ? AND like_status = ?", postID, false).Scan(&dislikeCount)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return likeCount, dislikeCount, nil
+}
+

@@ -30,7 +30,7 @@ func LikePostHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		}
 		err = database.InsertPostLike(db, userID, postID)
 		if err != nil {
-			http.Error(w, "error inserting the post into database", http.StatusSeeOther)
+			http.Error(w, "error inserting the like into database", http.StatusSeeOther)
 			return
 		}
 		http.Redirect(w, r, "/", http.StatusSeeOther)

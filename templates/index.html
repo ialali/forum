@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="/static/script.js"></script>
     <title>Forum - Main Page</title>
 </head>
 
 <body>
     <header>
-        <h1>Welcome to the Forum</h1>
+        <h1>Welcome to the Forum {{.Username}} !</h1>
     </header>
     <nav>
         <ul>
@@ -28,60 +29,44 @@
             <h2>Latest Posts</h2>
             <ul>
                 {{range .Posts}}
-                <h3>{{.Title}}</h3>
-                <p>{{.Content}}</p>
-                <p>Posted by Username: {{.Username}}</p>
-                <p> Hello :{{.UserID}}</p>
-                <!-- <p>Likes: {{.Likes}}, Dislikes: {{.Dislikes}}</p>
-                <form method="POST" action="/like-post">
+                <li>
+                    <h3>{{.Title}}</h3>
+                    <p>{{.Content}}</p>
+                    <p>Posted by Username: {{.Username}}</p>
+                    <p>User ID: {{.UserID}}</p>
+                    <p>Likes: {{.LikeCount}}, Dislikes: {{.DislikeCount}}</p>
+                    <form method="POST" action="/like-post">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="hidden" name="action" value="like">
+                        <button type="submit"><i class='bx bxs-like'></i>Like</button>
+                    </form>
+                    <form method="POST" action="/dislike-post">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="hidden" name="action" value="dislike">
+                        <button type="submit"><i class='bx bxs-dislike'></i>Dislike</button>
+                    </form>
+                    <ul>
+                        <!-- Display comments for this post -->
+                        {{range .Comments}}
+                        <li>
+                            <p>{{.Content}}</p>
+                            <p>Comment by: {{.Username}}</p>
+                            <p>Commenter ID: {{.UserID}}</p>
+                        </li>
+                        {{end}}
+                    </ul>
+                </li>
+                <form method="POST" action="/add-comment">
                     <input type="hidden" name="post_id" value="{{.ID}}">
-                    <input type="hidden" name="like" value="1">
-                    <button type="submit">Like</button>
+                    <input type="text" name="content" placeholder="Add a comment">
+                    <button type="submit">Submit</button>
                 </form>
-                <form method="POST" action="/dislike-post">
-                    <input type="hidden" name="post_id" value="{{.ID}}">
-                    <input type="hidden" name="like" value="0">
-                    <button type="submit">Dislike</button>
-                </form> -->
-
-                <!-- Display comments for this post -->
-                <!-- <ul>
-                    {{range .Comments}}
-                    <li>{{.Content}}</li>
-                    <li>Commented by: {{.Commenter}}</li>
-                    <li>Likes: {{.Likes}}, Dislikes: {{.Dislikes}}</li>
-                    <form method="POST" action="/like-comment">
-                        <input type="hidden" name="comment_id" value="{{.CommentID}}">
-                        <input type="hidden" name="like" value="1">
-                        <button type="submit">Like</button>
-                    </form>
-                    <form method="POST" action="/dislike-comment">
-                        <input type="hidden" name="comment_id" value="{{.CommentID}}">
-                        <input type="hidden" name="like" value="0">
-                        <button type="submit">Dislike</button>
-                    </form>
-                    
-                 -->
-                 {{end}}
-
-            </ul>
-
-            <!-- Form to add a comment -->
-            <form method="POST" action="/add-comment">
-                <input type="hidden" name="post_id" value="{{.ID}}">
-                <input type="text" name="content" placeholder="Add a comment">
-                <button type="submit">Submit</button>
-            </form>
-
-            <!-- ... -->
-            {{end}}
-            </ul>
-            <!-- Repeat the structure for each post -->
+                {{end}}
             </ul>
         </section>
     </main>
     <footer>
-        <p>&copy; 2023 Your Forum Name</p>
+        <!-- ... (your existing footer content) ... -->
     </footer>
 </body>
 

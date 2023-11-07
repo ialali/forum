@@ -15,6 +15,8 @@ type Post struct {
 	Content      string
 	Category     string
 	Comments     []Comment
+	LikeCount    int
+	DislikeCount int
 	CreationDate string
 	Username     string
 }
@@ -24,6 +26,8 @@ type Comment struct {
 	PostID       int
 	Username     string
 	Content      string
+	LikeCount    int
+	DislikeCount int
 	CreationDate string
 }
 type Category struct {
@@ -42,4 +46,10 @@ type CommentLike struct {
 	UserID    int
 	CommentID int
 	Like      int // 1 for like, 0 for dislike
+}
+
+type PageData struct {
+	IsAuthenticated bool
+	Username        string
+	Posts           []Post
 }
