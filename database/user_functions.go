@@ -92,7 +92,7 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
 
-	rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id")
+	rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC;")
 
 	if err != nil {
 		return nil, err
@@ -257,4 +257,3 @@ func GetCommentLikesCount(db *sql.DB, postID int) (int, int, error) {
 
 	return likeCount, dislikeCount, nil
 }
-
