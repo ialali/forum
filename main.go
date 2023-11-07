@@ -52,6 +52,12 @@ func main() {
 	http.HandleFunc("/dislike-post", func(w http.ResponseWriter, r *http.Request) {
 		handlers.DislikePostHandler(w, r, db)
 	})
+	http.HandleFunc("/like-comment", func(w http.ResponseWriter, r *http.Request) {
+		handlers.LikeCommentHandler(w, r, db)
+	})
+	http.HandleFunc("/dislike-comment", func(w http.ResponseWriter, r *http.Request) {
+		handlers.DisikeCommentHandler(w, r, db)
+	})
 
 	fmt.Println("server started on http://localhost:1212")
 	http.ListenAndServe(":1212", nil)

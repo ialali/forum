@@ -244,13 +244,13 @@ func GetCommentLikesCount(db *sql.DB, postID int) (int, int, error) {
 	var likeCount, dislikeCount int
 
 	// Query for likes count
-	err := db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE post_id = ? AND like_status = ?", postID, true).Scan(&likeCount)
+	err := db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE comment_id = ? AND like_status = ?", postID, true).Scan(&likeCount)
 	if err != nil {
 		return 0, 0, err
 	}
 
 	// Query for dislikes count
-	err = db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE post_id = ? AND like_status = ?", postID, false).Scan(&dislikeCount)
+	err = db.QueryRow("SELECT COUNT(*) FROM comments_likes WHERE comment_id = ? AND like_status = ?", postID, false).Scan(&dislikeCount)
 	if err != nil {
 		return 0, 0, err
 	}
