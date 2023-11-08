@@ -17,7 +17,7 @@ type Post struct {
 	Comments     []Comment
 	LikeCount    int
 	DislikeCount int
-	CreationDate string
+	CreationDate int
 	Username     string
 }
 type Comment struct {

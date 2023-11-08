@@ -24,6 +24,25 @@
         </ul>
     </nav>
     <main>
+        <section class="filter-options">
+            <h2>Filter Posts</h2>
+            <form action="/filter" method="GET">
+                <label for="category">Category:</label>
+                <select name="category" id="category">
+                    <option value="" selected disabled>Categories</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Nutrition">Nutrition</option>
+                    <option value="Recovery">Recovery</option>
+                    <option value="Tech">Tech</option>
+                    <!-- Add options for all available categories -->
+                </select>
+                <label for="created">Created by Me:</label>
+                <input type="checkbox" name="created" id="created" value="true">
+                <label for="liked">Liked by Me:</label>
+                <input type="checkbox" name="liked" id="liked" value="true">
+                <button type="submit">Apply Filter</button>
+            </form>
+        </section>
         <!-- Display a list of forum posts here -->
         <section class="forum-posts">
             <h2>Latest Posts</h2>
