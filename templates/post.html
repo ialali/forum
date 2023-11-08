@@ -10,25 +10,21 @@
 <body>
     <section class="post-form">
         <form action="/add-post" method="POST">
-            <input type="text" placeholder="Category" name="category" />
+            <select name="category">
+                <option value="" selected disabled>Category</option>
+                <option value="Sport">Sport</option>
+                <option value="Nutrition">Nutrition</option>
+                <option value="Recovery">Recovery</option>
+            </select>
             <input type="text" placeholder="Title" name="title" />
             <input type="text" placeholder="Content" name="content" />
             <input type="submit" value="Create new post" />
         </form>
 
 
+
     </section>
-    <section class="posts">
-        <ul>
-            {{range .Posts}}
-            <li>
-                <h3>{{.Title}}</h3>
-                <p>{{.Content}}</p>
-                <p>Posted by User ID: {{.UserID}}</p>
-            </li>
-            {{end}}
-        </ul>
-    </section>
+
 </body>
 
 </html>

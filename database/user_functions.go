@@ -68,10 +68,8 @@ func GetIDBYusername(db *sql.DB, username string) (int, error) {
 
 // CreatePost inserts a new post into the database and returns the post ID.
 func InsertPost(db *sql.DB, category, title, content string, userID int) error {
-	// You should also add additional error handling and validation as needed.
-
 	// Prepare the SQL statement to insert a new post.
-	stmt, err := db.Prepare("INSERT INTO posts (title, content, user_id, category) VALUES (?, ?, ?, ?)")
+	stmt, err := db.Prepare("INSERT INTO posts (user_id, title, content, category, created_at) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
@@ -81,13 +79,15 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 	createdAt := time.Now()
 
 	// Execute the SQL statement to insert the new post.
-	_, err = stmt.Exec(title, content, userID, createdAt)
+	_, err = stmt.Exec(userID, title, content, category, createdAt)
 	if err != nil {
 		return err
 	}
 
 	return nil
 }
+
+  
 
 func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
@@ -256,4 +256,96 @@ func GetCommentLikesCount(db *sql.DB, postID int) (int, int, error) {
 	}
 
 	return likeCount, dislikeCount, nil
+}
+func GetOwnedPosts(db *sql.DB, userID int) ([]Post, error) {
+	query := `
+        SELECT id, title, content, category
+        FROM posts
+        WHERE user_id = ?
+    `
+
+	rows, err := db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var ownedPosts []Post
+
+	for rows.Next() {
+		var post Post
+		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Category); err != nil {
+			return nil, err
+		}
+		ownedPosts = append(ownedPosts, post)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return ownedPosts, nil
+}
+
+func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
+	query := `
+        SELECT p.id, p.title, p.content
+        FROM posts p
+        INNER JOIN post_likes pl ON p.id = pl.post_id
+        WHERE pl.user_id = ? AND pl.like_status = ?
+    `
+
+	rows, err := db.Query(query, userID, liked)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var likedPosts []Post
+
+	for rows.Next() {
+		var post Post
+		if err := rows.Scan(&post.ID, &post.Title, &post.Content); err != nil {
+			return nil, err
+		}
+		likedPosts = append(likedPosts, post)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return likedPosts, nil
+}
+func GetPostsByCategory(db *sql.DB, category string) ([]Post, error) {
+	// Query posts with the specified category, including username
+	query := "SELECT posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE category = ?"
+	rows, err := db.Query(query, category)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	// Use RowScanner instead of rows.Scan
+	var posts []Post
+	scanner := func(row *sql.Row) error {
+		var post Post
+		err := row.Scan(&post.ID, &post.Title, &post.Content, &post.UserID, &post.Category, &post.Username)
+		if err != nil {
+			return err
+		}
+		posts = append(posts, post)
+		return nil
+	}
+
+	// Read all rows using RowScanner
+	if err := rows.Scan(scanner); err != nil {
+		return nil, err
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return posts, nil
 }
