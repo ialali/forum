@@ -41,10 +41,16 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	// 3. For each post, retrieve like/dislike counts and usernames for comments.
-	for i := range posts {
+	for i, post := range posts {
 		comments, err := database.GetCommentsForPost(db, posts[i].ID)
 		if err != nil {
 			http.Error(w, "Error fetching comments", http.StatusInternalServerError)
+			log.Println(err)
+			return
+		}
+		likeCount, dislikeCount, err := database.GetPostLikesCount(db, post.ID)
+		if err != nil {
+			http.Error(w, "Error fetching post likes/dislikes", http.StatusInternalServerError)
 			log.Println(err)
 			return
 		}
@@ -74,17 +80,16 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		}
 
 		// Assign comments to the post
-		posts[i].Comments = comments
+		post.Comments = comments
+		post.LikeCount = likeCount
+		post.DislikeCount = dislikeCount
+		posts[i] = post
 	}
 
 	// 4. Render the filtered posts to the page.
 	userData := GetAuthenticatedUserData(db, r)
 
-	data := struct {
-		IsAuthenticated bool
-		Username        string
-		Posts           []database.Post
-	}{
+	data := database.PageData{
 		IsAuthenticated: userData.IsAuthenticated,
 		Username:        userData.Username,
 		Posts:           posts,
