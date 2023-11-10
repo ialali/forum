@@ -20,31 +20,50 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	category := r.FormValue("category")
 	created := r.FormValue("created")
 	liked := r.FormValue("liked")
-	log.Printf("Querying for category: %s\n", category)
 
 	// Initialize an empty slice to hold filtered posts.
 	var posts []database.Post
+	createdBool := created == "true"
+	likedBool := liked == "true"
 
 	// 2. Based on the criteria, call the corresponding functions to retrieve the filtered posts.
 	switch {
 	case category != "":
 		// Filter by category
-		posts, _ = database.GetPostsByCategory(db, category)
-	case created == "true":
-		// Filter created posts by the authenticated user
-		posts, _ = database.GetOwnedPosts(db, userID)
-	case liked == "true":
-		// Filter liked posts by the authenticated user
-		posts, _ = database.GetLikedPosts(db, userID, true)
+		posts, _ = database.GetPostsByCategory(db, category, userID, createdBool, likedBool)
+
+		// If 'created' is true, filter created posts by the authenticated user
+		if created == "true" {
+			userPosts, _ := database.GetOwnedPosts(db, userID)
+			posts = intersection(posts, userPosts)
+		}
+
+		// If 'liked' is true, filter liked posts by the authenticated user
+		if liked == "true" {
+			likedPosts, _ := database.GetLikedPosts(db, userID, true)
+			posts = intersection(posts, likedPosts)
+		}
+
 	default:
-		// No criteria selected, show all posts
+		// No category selected, show all posts
 		posts, _ = database.GetPosts(db)
+
+		// If 'created' is true, filter created posts by the authenticated user
+		if created == "true" {
+			userPosts, _ := database.GetOwnedPosts(db, userID)
+			posts = intersection(posts, userPosts)
+		}
+
+		// If 'liked' is true, filter liked posts by the authenticated user
+		if liked == "true" {
+			likedPosts, _ := database.GetLikedPosts(db, userID, true)
+			posts = intersection(posts, likedPosts)
+		}
 	}
-	log.Println("Category:", category)
 
 	// 3. For each post, retrieve like/dislike counts and usernames for comments.
 	for i, post := range posts {
-		comments, err := database.GetCommentsForPost(db, posts[i].ID)
+		comments, err := database.GetCommentsForPost(db, post.ID)
 		if err != nil {
 			http.Error(w, "Error fetching comments", http.StatusInternalServerError)
 			log.Println(err)
@@ -68,17 +87,6 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 			comments[j].LikeCount = likeCount
 			comments[j].DislikeCount = dislikeCount
-
-			// Assuming you have a function to get the username by user ID
-			// username, err := database.GetUserByID(db, comments[j].UserID)
-			// if err != nil {
-			// 	http.Error(w, "Error fetching username", http.StatusInternalServerError)
-			// 	log.Println(err)
-			// 	return
-			// }
-
-			// Assign the username to the comment
-			// comments[j].Username = username
 		}
 
 		// Assign comments to the post
@@ -91,7 +99,11 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	// 4. Render the filtered posts to the page.
 	userData := GetAuthenticatedUserData(db, r)
 
-	data := database.PageData{
+	data := struct {
+		IsAuthenticated bool
+		Username        string
+		Posts           []database.Post
+	}{
 		IsAuthenticated: userData.IsAuthenticated,
 		Username:        userData.Username,
 		Posts:           posts,
@@ -110,4 +122,22 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		log.Println(err)
 		return
 	}
+}
+
+// intersection returns the intersection of two slices of posts.
+func intersection(a, b []database.Post) []database.Post {
+	set := make(map[int]bool)
+	var result []database.Post
+
+	for _, post := range a {
+		set[post.ID] = true
+	}
+
+	for _, post := range b {
+		if set[post.ID] {
+			result = append(result, post)
+		}
+	}
+
+	return result
 }

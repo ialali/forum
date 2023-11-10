@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
 
 	auth "forum/middleware"
 	"time"
@@ -258,40 +258,51 @@ func GetCommentLikesCount(db *sql.DB, postID int) (int, int, error) {
 }
 func GetOwnedPosts(db *sql.DB, userID int) ([]Post, error) {
 	query := `
-        SELECT id, title, content, category
-        FROM posts
-        WHERE user_id = ?
+        SELECT 
+            posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username 
+        FROM 
+            posts 
+        INNER JOIN 
+            users 
+        ON 
+            posts.user_id = users.id 
+        WHERE 
+            posts.user_id = ?
     `
-
 	rows, err := db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var ownedPosts []Post
-
+	var posts []Post
 	for rows.Next() {
 		var post Post
-		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Category); err != nil {
+		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
 			return nil, err
 		}
-		ownedPosts = append(ownedPosts, post)
+		posts = append(posts, post)
 	}
 
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
-	return ownedPosts, nil
+	return posts, nil
 }
 
 func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
 	query := `
-        SELECT p.id, p.title, p.content
-        FROM posts p
-        INNER JOIN post_likes pl ON p.id = pl.post_id
-        WHERE pl.user_id = ? AND pl.like_status = ?
+        SELECT 
+            p.id, p.user_id, p.title, p.content, p.category, u.username
+        FROM 
+            posts p
+        INNER JOIN 
+            post_likes pl ON p.id = pl.post_id
+        INNER JOIN 
+            users u ON p.user_id = u.id
+        WHERE 
+            pl.user_id = ? AND pl.like_status = ?
     `
 
 	rows, err := db.Query(query, userID, liked)
@@ -305,7 +316,7 @@ func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
 
 	for rows.Next() {
 		var post Post
-		if err := rows.Scan(&post.ID, &post.Title, &post.Content); err != nil {
+		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
 			return nil, err
 		}
 		likedPosts = append(likedPosts, post)
@@ -317,12 +328,30 @@ func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
 
 	return likedPosts, nil
 }
-func GetPostsByCategory(db *sql.DB, category string) ([]Post, error) {
-	query := "SELECT posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE category = ?"
-	rows, err := db.Query(query, category)
+
+func GetPostsByCategory(db *sql.DB, category string, userID int, createdByMe, likedByMe bool) ([]Post, error) {
+	var query string
+	var args []interface{}
+
+	// Base query
+	query = "SELECT posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.category = ?"
+	args = append(args, category)
+
+	if createdByMe {
+		// Add condition to filter by user ID
+		query += " AND posts.user_id = ?"
+		args = append(args, userID)
+	}
+
+	if likedByMe {
+		// Add condition to filter by liked posts
+		query += " AND posts.id IN (SELECT post_id FROM post_likes WHERE user_id = ?)"
+		args = append(args, userID)
+	}
+
+	// Use Query instead of QueryRow
+	rows, err := db.Query(query, args...)
 	if err != nil {
-		log.Println("Error querying for category:", category)
-		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -330,17 +359,16 @@ func GetPostsByCategory(db *sql.DB, category string) ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
-			log.Println("Error scanning row for category:", category)
-			log.Println(err)
+		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.Category, &post.Username)
+		if err != nil {
+			fmt.Println("Error scanning row:", err)
 			return nil, err
 		}
 		posts = append(posts, post)
 	}
 
 	if err := rows.Err(); err != nil {
-		log.Println("Error reading rows for category:", category)
-		log.Println(err)
+		fmt.Println("Error iterating over rows:", err)
 		return nil, err
 	}
 
