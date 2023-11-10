@@ -20,6 +20,7 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	category := r.FormValue("category")
 	created := r.FormValue("created")
 	liked := r.FormValue("liked")
+	log.Printf("Querying for category: %s\n", category)
 
 	// Initialize an empty slice to hold filtered posts.
 	var posts []database.Post
@@ -39,6 +40,7 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		// No criteria selected, show all posts
 		posts, _ = database.GetPosts(db)
 	}
+	log.Println("Category:", category)
 
 	// 3. For each post, retrieve like/dislike counts and usernames for comments.
 	for i, post := range posts {

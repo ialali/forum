@@ -53,6 +53,7 @@
                     <p>{{.Content}}</p>
                     <p>Posted by Username: {{.Username}}</p>
                     <p>User ID: {{.UserID}}</p>
+                    <p>Category: {{.Category}}</p>
                     <p>Likes: {{.LikeCount}}, Dislikes: {{.DislikeCount}}</p>
                     <form method="POST" action="/like-post">
                         <input type="hidden" name="post_id" value="{{.ID}}">

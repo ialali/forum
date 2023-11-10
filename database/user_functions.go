@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"log"
 
 	auth "forum/middleware"
 	"time"
@@ -86,8 +87,6 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 
 	return nil
 }
-
-  
 
 func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
@@ -299,6 +298,7 @@ func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	defer rows.Close()
 
 	var likedPosts []Post
@@ -318,32 +318,29 @@ func GetLikedPosts(db *sql.DB, userID int, liked bool) ([]Post, error) {
 	return likedPosts, nil
 }
 func GetPostsByCategory(db *sql.DB, category string) ([]Post, error) {
-	// Query posts with the specified category, including username
-	query := "SELECT posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE category = ?"
+	query := "SELECT posts.id, posts.user_id, posts.title, posts.content, posts.category, users.username FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE category = ?"
 	rows, err := db.Query(query, category)
 	if err != nil {
+		log.Println("Error querying for category:", category)
+		log.Println(err)
 		return nil, err
 	}
 	defer rows.Close()
 
-	// Use RowScanner instead of rows.Scan
 	var posts []Post
-	scanner := func(row *sql.Row) error {
+	for rows.Next() {
 		var post Post
-		err := row.Scan(&post.ID, &post.Title, &post.Content, &post.UserID, &post.Category, &post.Username)
-		if err != nil {
-			return err
+		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
+			log.Println("Error scanning row for category:", category)
+			log.Println(err)
+			return nil, err
 		}
 		posts = append(posts, post)
-		return nil
-	}
-
-	// Read all rows using RowScanner
-	if err := rows.Scan(scanner); err != nil {
-		return nil, err
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Println("Error reading rows for category:", category)
+		log.Println(err)
 		return nil, err
 	}
 
