@@ -23,20 +23,28 @@ func ShowPostHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			log.Println(err)
 			return
 		}
+		likeCount, dislikeCount, err := database.GetPostLikesCount(db, post.ID)
+		if err != nil {
+			http.Error(w, "Error fetching post likes/dislikes", http.StatusInternalServerError)
+			log.Println(err)
+			return
+		}
 
 		for j, comment := range comments {
-			likeCount, dislikeCount, err := database.GetCommentLikesCount(db, comment.ID)
+			commentLikeCount, commentDislikeCount, err := database.GetCommentLikesCount(db, comment.ID)
 			if err != nil {
 				http.Error(w, "Error fetching comment likes/dislikes", http.StatusInternalServerError)
 				log.Println(err)
 				return
 			}
 
-			comments[j].LikeCount = likeCount
-			comments[j].DislikeCount = dislikeCount
+			comments[j].LikeCount = commentLikeCount
+			comments[j].DislikeCount = commentDislikeCount
 		}
 
 		post.Comments = comments
+		post.LikeCount = likeCount
+		post.DislikeCount = dislikeCount
 		posts[i] = post
 	}
 
