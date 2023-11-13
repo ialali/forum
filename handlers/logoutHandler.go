@@ -3,14 +3,30 @@ package handlers
 import "net/http"
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	// Clear the session token by setting the cookie to expire.
-	http.SetCookie(w, &http.Cookie{
-		Name:   "sessionToken",
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		// Handle the error, log it, or redirect to an error page
+		http.Error(w, "Failed to get session cookie", http.StatusInternalServerError)
+		return
+	}
+
+	if cookie != nil {
+		delete(sessions, cookie.Value)
+		ClearSession(w, cookie.Value)
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func ClearSession(w http.ResponseWriter, sessionName string) {
+	cookie := http.Cookie{
+		Name:   "session_token",
 		Value:  "",
 		Path:   "/",
-		MaxAge: -1, // Expiration time in seconds (0 or negative value)
-	})
+		MaxAge: -1,
+	}
+	http.SetCookie(w, &cookie)
 
-	// Redirect the user to the login page or any other desired page.
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	// Remove the session data from the map
+	delete(sessions, sessionName)
 }
