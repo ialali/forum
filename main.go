@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// Define the path to your SQLite database file
-	dbPath := "/Users/ibrahim/01Founders/forum/database/database.db"
+	dbPath := "database/database.db"
 
 	// Open a connection to the database
 	db, err := database.OpenDatabase(dbPath)
@@ -62,8 +62,8 @@ func main() {
 		handlers.FilterPosts(w, r, db)
 	})
 
-	fmt.Println("server started on http://localhost:1212")
-	http.ListenAndServe(":1212", nil)
+	fmt.Println("server started on http://localhost:1215")
+	http.ListenAndServe(":1215", nil)
 
 	// You can now use the 'db' connection to perform database operations.
 
