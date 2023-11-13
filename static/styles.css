@@ -1,0 +1,32 @@
+/* UNIVERSAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* CUSTOM VARIABLES IN SCOPE */
+:root {
+  --primary-color: #4891ff;
+  --light-color: #f4f4f6;
+  --dark-color: #444;
+}
+/* BODY STYLING */
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background: #f0f8ff;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: #444;
+}
+ul {
+  list-style: none;
+}
+img {
+  max-width: 100%;
+}
+/* NAVBAR */

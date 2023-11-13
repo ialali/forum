@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// Define the path to your SQLite database file
-	dbPath := "/Users/ibrahim/01Founders/forum/database/database.db"
+	dbPath := "database/database.db"
 
 	// Open a connection to the database
 	db, err := database.OpenDatabase(dbPath)
