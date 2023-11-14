@@ -12,7 +12,7 @@
 }
 /* BODY STYLING */
 body {
-  font-family: "Poppins" sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   background: #dadada;
@@ -60,7 +60,28 @@ img {
   margin-left: 10px;
 }
 
-/* UTILITY CLASSES */
+/* HERO SECTION */
+.hero {
+  margin-bottom: 50px;
+  border: 2px solid rgb(120, 227, 106);
+}
+.hero .container {
+  background: #a0e8f2;
+  height: 250px;
+}
+.hero .hero-content {
+  margin: 0 auto;
+}
+.hero .hero-text {
+  margin-bottom: 20px;
+}
+
+/* POSTS SECTION */
+.posts {
+  padding: 25px 0;
+}
+
+/*** UTILITY CLASSES ***/
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -79,4 +100,41 @@ img {
   border-radius: 10px;
   cursor: pointer;
   transition: 0.5s;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn-dark {
+  background: var(--dark-color);
+  color: aliceblue;
+}
+.btn-block {
+  background: var(--primary-color);
+  color: #444;
+}
+
+/* TEXT CLASSES */
+.text-xxl {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 40px 0 20px;
+}
+.text-xl {
+  font-size: 2.2rem;
+  line-height: 1.4;
+  font-weight: normal;
+  margin: 40px 0 20px;
+}
+.text-lg {
+  font-size: 1.8rem;
+  line-height: 1.4;
+  font-weight: normal;
+  margin: 30px 0 20px;
+}
+.text-md {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  font-weight: normal;
+  margin: 20px 0 10px;
 }
