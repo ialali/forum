@@ -12,7 +12,7 @@
 }
 /* BODY STYLING */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   background: #dadada;
@@ -33,6 +33,9 @@ img {
   background: #eee;
   padding: 20px;
   border: 2px solid red;
+  /* position: fixed; */
+  width: 100vw;
+  /* z-index: 1000; */
 }
 
 .navbar .container {
@@ -67,7 +70,7 @@ img {
 }
 .hero .container {
   background: #a0e8f2;
-  height: 250px;
+  height: 150px;
 }
 .hero .hero-content {
   margin: 0 auto;
@@ -80,6 +83,19 @@ img {
 .posts {
   padding: 25px 0;
 }
+.posts-likedislike {
+  display: flex;
+}
+.iconoir-thumbs-up,
+.iconoir-thumbs-down {
+  border: none;
+}
+/* form {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  border: 2px solid green;
+} */
 
 /*** UTILITY CLASSES ***/
 .container {

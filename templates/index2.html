@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/styles.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+            rel="stylesheet" />
+        <!-- Fontawesome cdnjs.com -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+
+        <title>Forum</title>
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><img src="/static/forum-img.jpeg" alt="logo" width="100" /></a>
+                </div>
+            </div>
+            <!-- Nav Menu -->
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/create-post">Create Post</a></li>
+                    <li><a class="btn btn-light" href="/logout"><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <li><a class="btn btn-light" href="/login"><i
+                                class="fa-solid fa-arrow-right-to-bracket"></i>Login</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header>
+            <h1>Welcome to the Forum {{.Username}} !</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {{if .IsAuthenticated}}
+                <li><a href="/create-post">Create Post</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {{else}}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                {{end}}
+            </ul>
+        </nav>
+        <main>
+            <section class="filter-options">
+                <h2>Filter Posts</h2>
+                <form action="/filter" method="GET">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        <option value="" selected disabled>Categories</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Nutrition">Nutrition</option>
+                        <option value="Recovery">Recovery</option>
+                        <option value="Tech">Tech</option>
+                        <!-- Add options for all available categories -->
+                    </select>
+                    <label for="created">Created by Me:</label>
+                    <input type="checkbox" name="created" id="created" value="true">
+                    <label for="liked">Liked by Me:</label>
+                    <input type="checkbox" name="liked" id="liked" value="true">
+                    <button type="submit">Apply Filter</button>
+                </form>
+            </section>
+            <!-- Display a list of forum posts here -->
+            <section class="forum-posts">
+                <h2>Latest Posts</h2>
+                <ul>
+                    {{range .Posts}}
+                    <li>
+                        <h3>{{.Title}}</h3>
+                        <p>Category: {{.Category}}</p>
+                        <p>{{.Content}}</p>
+                        <p>Posted by Username: {{.Username}}</p>
+                        <p>Likes: {{.LikeCount}}, Dislikes: {{.DislikeCount}}</p>
+                        <div class="posts-likedislike">
+                            <form method="POST" action="/like-post">
+                                <input type="hidden" name="post_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="like">
+                                <button type="submit"><i class='bx bxs-like'></i></button>
+                            </form>
+                            <form method="POST" action="/dislike-post">
+                                <input type="hidden" name="post_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="dislike">
+                                <button type="submit"><i class='bx bxs-dislike'></i></button>
+                            </form>
+                        </div>
+                        <ul>
+                            <!-- Display comments for this post -->
+                            {{range .Comments}}
+                            <li>
+                                <p>{{.Content}}</p>
+                                <p>Comment by: {{.Username}}</p>
+                                <p>Commenter ID: {{.UserID}}</p>
+                                <p>Likes: {{.LikeCount}}, Dislikes: {{.DislikeCount}}</p>
+                                <form method="POST" action="/like-comment">
+                                    <input type="hidden" name="comment_id" value="{{.ID}}">
+                                    <input type="hidden" name="action" value="like">
+                                    <button type="submit"><i class='bx bxs-like'></i></button>
+                                </form>
+                                <form method="POST" action="/dislike-comment">
+                                    <input type="hidden" name="comment_id" value="{{.ID}}">
+                                    <input type="hidden" name="action" value="dislike">
+                                    <button type="submit"><i class='bx bxs-dislike'></i></button>
+                                </form>
+                            </li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    <form method="POST" action="/add-comment">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="text" name="content" placeholder="Add a comment">
+                        <button type="submit">Submit</button>
+                    </form>
+                    {{end}}
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <!-- ... (your existing footer content) ... -->
+        </footer>
+        <script src="/static/script.js"></script>
+    </body>
+
+</html>
