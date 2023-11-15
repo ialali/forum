@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"log"
 
 	auth "forum/middleware"
 	"time"
@@ -33,6 +34,18 @@ func RegisterUser(db *sql.DB, username, email, password string) (int64, error) {
 	}
 
 	return id, nil
+}
+
+func UserExists(db *sql.DB, username string) bool {
+
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM users WHERE username = ?", username).Scan(&count)
+	if err != nil {
+		log.Println("Error checking if user exists:", err)
+		return false
+	}
+
+	return count > 0
 }
 
 func GetUserByID(db *sql.DB, userID int) (User, error) {

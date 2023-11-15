@@ -45,6 +45,11 @@ func LoginSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Please fill in username or password", http.StatusBadRequest)
 		return // Return to exit the function
 	}
+	if !database.UserExists(db, username) {
+		// Redirect to the login page with an appropriate message
+		http.Redirect(w, r, "/register", http.StatusSeeOther)
+		return
+	}
 	// Retrieve the hashed password from the database for the given username.
 	storedHashedPassword, err := auth.GetHashedPassword(db, username)
 	if err != nil {
