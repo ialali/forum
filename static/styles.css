@@ -35,6 +35,13 @@ nav {
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Poppins', sans-serif;
 }
 
 .logo {
@@ -54,7 +61,6 @@ body {
   font-weight: 500;
   margin: 0 25px;
   transition: all 0.45s ease;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 .navlist a:hover {
@@ -81,7 +87,6 @@ body {
 .filter-options h2 {
   font-size: var(--h2-font);
   color: var(--main-color);
-  font-family: 'Open Sans', sans-serif;
 }
 
 .filter-options {
