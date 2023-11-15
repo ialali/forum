@@ -27,6 +27,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tmpl.Execute(w, nil)
+
 }
 
 func LoginSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {

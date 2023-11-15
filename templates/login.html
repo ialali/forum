@@ -5,18 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
     <script src="/static/script.js"></script>
 </head>
 
 <body>
-    <h1 class="title">Login</h1>
-    <form action="/loginauth" method="POST">
-        <input type="text" placeholder="Username" name="username" />
-        <input type="password" placeholder="Password" name="password" />
-        <input type="submit" value="Login" />
-    </form>
-    <a class="flipbutton" id="loginButton" href="/register">Create my account →</a>
+    <div class="flip-container">
+        <div class="flipper" id="flipper">
+            <div class="front">
+                <h1 class="title">Login</h1>
+                <form action="/loginauth" method="POST">
+                    <input type="text" placeholder="Username" name="username" />
+                    <input type="password" placeholder="Password" name="password" />
+                    <input type="submit" value="Login" />
+                </form>
+                <a class="flipbutton" id="loginButton" href="">Create my account →</a>
+            </div>
+
+            <div class="back">
+                <h1 class="title">Register</h1>
+                <form action="/registerauth">
+                    <input type="text" placeholder="Username" name="username" id="username" />
+                    <input type="email" placeholder="Email" name="email" id="email" />
+                    <input type="password" placeholder="Password" name="password" id="password" />
+                    <input type="submit" value="Sign up" />
+                </form>
+                <a class="flipbutton" id="registerButton" href="#">Login to my account →</a>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
