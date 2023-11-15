@@ -8,28 +8,29 @@
 }
 
 :root {
-  --bg-color: #00b4d8;
-  --second-bg-color: #caf0f8;
-  --text-color: #03045e;
-  --second-color: #0077b6;
-  --main-color: #013a63;
-  --big-font: 5rem;
-  --h2-font: 3rem;
-  --p-font: 1.1rem;
+    --bg-color: #00b4d8;
+    --second-bg-color: #caf0f8;
+    --text-color: #03045e;
+    --second-color: #0077b6;
+    --main-color: #013a63;
+    --big-font: 5rem;
+    --h2-font: 3rem;
+    --p-font: 1.1rem;
 }
 
 nav {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 15%;
-  border-bottom: 1px solid transparent;
-  transition: all 0.45s ease;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 15%;
+    border-bottom: 1px solid transparent;
+    transition: all 0.45s ease;
+
 }
 
 body {
@@ -45,22 +46,25 @@ h3 {
 }
 
 .logo {
-  width: 100%;
-  border: 1px solid red;
-  margin-right: 700px;
-  height: auto;
+    width: 100%;
+    border: 1px solid red;
+    margin-right: 700px;
+    height: auto;
+
 }
 
 .navlist {
-  display: flex;
+    display: flex;
+
 }
 
 .navlist a {
-  color: var(--main-color);
-  font-size: 17px;
-  font-weight: 500;
-  margin: 0 25px;
-  transition: all 0.45s ease;
+    color: var(--main-color);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 25px;
+    transition: all 0.45s ease;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navlist a:hover {
@@ -72,9 +76,9 @@ h3 {
 }
 
 .hero {
-  background-color: var(--bg-color);
-  color: var(--main-color);
-  padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    padding: 20px;
 }
 
 .hero h1 {
@@ -236,7 +240,7 @@ h3 {
 }
 
 .post-header h3 {
-  margin: 5px;
+    margin: 5px;
 }
 
 .post-author {
@@ -265,7 +269,13 @@ h3 {
 
 .post-content h3,
 .post-content p {
-  text-align: left;
+    text-align: left;
+
+}
+
+.comments-counts {
+    font-size: var(--p-font);
+    font-family: sans-serif;
 }
 
 /* maybe can delete not using now*/
@@ -314,25 +324,25 @@ h3 {
 }
 
 .speech-bubble {
-  border: 0.5px solid #b8b7b7;
-  padding-left: 5px;
-  border-radius: 5px;
-  margin: 5px;
+    border: 0.5px solid #b8b7b7;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 /*end of showing comment container*/
 
 /* for adding comment form*/
 .add-comment-form form {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 5px;
 }
 
 .add-comment-form form input {
-  height: 30px;
-  flex: 50px;
+    height: 30px;
+    flex: 50px;
 }
 
 .add-comment-form form button {

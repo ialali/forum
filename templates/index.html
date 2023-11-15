@@ -40,128 +40,127 @@
         </nav>
 
 
-        <!-----------Welcome Message Design------------>
-        <section class="hero">
-            <h1>Welcome to the Forum {{.Username}} !</h1>
-        </section>
-        <!------------Filtering Bar--------------->
-        <section class="filter-options">
-            <h2 class="posts-heading">Filter Posts</h2>
-            <form action="/filter" method="GET">
-                <label for="category">Category:</label>
-                <select name="category" id="category">
-                    <option value="" selected disabled>Categories</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Nutrition">Nutrition</option>
-                    <option value="Recovery">Recovery</option>
-                    <option value="Tech">Tech</option>
-                    <!-- Add options for all available categories -->
-                </select>
-                <label for="created">Created by Me:</label>
-                <input type="checkbox" name="created" id="created" value="true">
-                <label for="liked">Liked by Me:</label>
-                <input type="checkbox" name="liked" id="liked" value="true">
-                <button type="submit">Apply Filter</button>
-            </form>
-        </section>
-        <!-- Display a list of forum posts here -->
-        <section class="post-container">
-            <h2 class="posts-heading">Latest Posts</h2>
-            {{range .Posts}}
-            <div class="cardbox-container" data-post-id="{{.ID}}">
-                <!-- Form for like and dislike -->
-                <div class="post-left-column">
-                    <div class="post-user-pic">
-                        <img class="post-pic" src="/static/images/user-solid-24.png" alt="user-pic">
-                    </div>
-                    <div class="like-dislike-buttons">
-                        <form method="POST" action="/like-post">
-                            <input type="hidden" name="post_id" value="{{.ID}}">
-                            <input type="hidden" name="action" value="like">
-                            <button type="submit" style="border: none; background-color: transparent;">
-                                <span class="post-rating-button material-icons">thumb_up</span>
-                            </button>
-                            <div class="post-rating-count">{{.LikeCount}}</div>
-                        </form>
-                        <form method="POST" action="/dislike-post">
-                            <input type="hidden" name="post_id" value="{{.ID}}">
-                            <input type="hidden" name="action" value="dislike">
-                            <button type="submit" style="border: none; background-color: transparent;">
-                                <span class="post-rating-button material-icons">thumb_down</span>
-                            </button>
-                            <div class="post-rating-count">{{.DislikeCount}}</div>
-                        </form>
-                    </div>
+    <!-----------Welcome Message Design------------>
+    <section class="hero">
+        <h1>Welcome to the Forum {{.Username}} !</h1>
+    </section>
+    <!------------Filtering Bar--------------->
+    <section class="filter-options">
+        <h2>Filter Posts</h2>
+        <form action="/filter" method="GET">
+            <label for="category">Category:</label>
+            <select name="category" id="category">
+                <option value="" selected disabled>Categories</option>
+                <option value="Sport">Sport</option>
+                <option value="Nutrition">Nutrition</option>
+                <option value="Recovery">Recovery</option>
+                <option value="Tech">Tech</option>
+                <!-- Add options for all available categories -->
+            </select>
+            <label for="created">Created by Me:</label>
+            <input type="checkbox" name="created" id="created" value="true">
+            <label for="liked">Liked by Me:</label>
+            <input type="checkbox" name="liked" id="liked" value="true">
+            <button type="submit">Apply Filter</button>
+        </form>
+    </section>
+    <!-- Display a list of forum posts here -->
+    <section class="post-container">
+        <h2>Latest Posts</h2>
+        {{range .Posts}}
+        <div class="cardbox-container" data-post-id="{{.ID}}">
+            <!-- Form for like and dislike -->
+            <div class="post-left-column">
+                <div class="post-user-pic">
+                    <img class="post-pic" src="/static/img/Loki.webp" alt="user-pic">
                 </div>
-
-                <!-- User posting -->
-                <div class="post-right-column">
-                    <!-- ... (unchanged) ... -->
-                    <div class="post-header">
-                        <h3>{{.Title}}</h3>
-                    </div>
-                    <div class="post-content">
-                        {{.Content}}
-                    </div>
-                    <div class="post-author">
-                        <div class="post-author-handle">&#160;&#160;posted by <span>{{.Username}}</span>
-                            {{.CreationDate}}
-                        </div>
-                    </div>
-
-                    <div class="comments-counts">Comments:</div>
-                    <!-- Display comments -->
-                    {{range .Comments}}
-                    <div class="comment-container">
-                        <ul>
-                            <!-- Display comments for this post -->
-                            <div class="speech-bubble">
-                                <p>{{.Content}}</p>
-                                <div class="post-author">
-                                    <div class="post-author-handle">&#160;&#160;Comment by <span>{{.Username}}</span>
-                                        {{.CreationDate}}</div>
-                                </div>
-                            </div>
-                            <!-- Form for like dislike comments for this post -->
-                            <div class="like-dislike-buttons">
-                                <form method="POST" action="/like-comment">
-                                    <input type="hidden" name="comment_id" value="{{.ID}}">
-                                    <input type="hidden" name="action" value="like">
-                                    <button type="submit">
-                                        <span class="post-rating-button material-icons">thumb_up</span>
-                                    </button>
-                                </form>
-                                <div class="post-rating-count">{{.LikeCount}}</div>
-                                <form method="POST" action="/dislike-comment">
-                                    <input type="hidden" name="comment_id" value="{{.ID}}">
-                                    <input type="hidden" name="action" value="dislike">
-                                    <button type="submit">
-                                        <span class="post-rating-button material-icons">thumb_down</span>
-                                    </button>
-                                </form>
-                                <div class="post-rating-count">{{.DislikeCount}}</div>
-                            </div>
-                        </ul>
-                    </div>
-                    {{end}}
-                    <!-- Here you can add comment -->
-                    <div class="add-comment-form">
-                        <form method="POST" action="/add-comment">
-                            <input type="hidden" name="post_id" value="{{.ID}}">
-                            <input type="text" name="content" placeholder="make some comment here...">
-                            <button type="submit">add </button>
-                        </form>
-                    </div>
-                    <!-- End of submit comment form -->
+                <div class="like-dislike-buttons">
+                    <form method="POST" action="/like-post">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="hidden" name="action" value="like">
+                        <button type="submit" style="border: none; background-color: transparent;">
+                            <span class="post-rating-button material-icons">thumb_up</span>
+                        </button>
+                        <div class="post-rating-count">{{.LikeCount}}</div>
+                    </form>
+                    <form method="POST" action="/dislike-post">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="hidden" name="action" value="dislike">
+                        <button type="submit" style="border: none; background-color: transparent;">
+                            <span class="post-rating-button material-icons">thumb_down</span>
+                        </button>
+                        <div class="post-rating-count">{{.DislikeCount}}</div>
+                    </form>
                 </div>
             </div>
-            <!-- End of cardbox-container -->
-            {{end}}
-            </ul>
-        </section>
-        <footer>
-            <!-- ... (your existing footer content) ... -->
-        </footer>
-    </body>
+
+            <!-- User posting -->
+            <div class="post-right-column">
+                <!-- ... (unchanged) ... -->
+                <div class="post-header">
+                    <h3>{{.Title}}</h3>
+                </div>
+                <div class="post-content">
+                    {{.Content}}
+                </div>
+                <div class="post-author">
+                    <div class="post-author-handle">&#160;&#160;posted by <span>{{.Username}}</span> {{.CreationDate}}
+                    </div>
+                </div>
+
+                <div class="comments-counts">Comments:</div>
+                <!-- Display comments -->
+                {{range .Comments}}
+                <div class="comment-container">
+                    <ul>
+                        <!-- Display comments for this post -->
+                        <div class="speech-bubble">
+                            <p>{{.Content}}</p>
+                            <div class="post-author">
+                                <div class="post-author-handle">&#160;&#160;Comment by <span>{{.Username}}</span>
+                                    {{.CreationDate}}</div>
+                            </div>
+                        </div>
+                        <!-- Form for like dislike comments for this post -->
+                        <div class="like-dislike-buttons">
+                            <form method="POST" action="/like-comment">
+                                <input type="hidden" name="comment_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="like">
+                                <button type="submit">
+                                    <span class="post-rating-button material-icons">thumb_up</span>
+                                </button>
+                            </form>
+                            <div class="post-rating-count">{{.LikeCount}}</div>
+                            <form method="POST" action="/dislike-comment">
+                                <input type="hidden" name="comment_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="dislike">
+                                <button type="submit">
+                                    <span class="post-rating-button material-icons">thumb_down</span>
+                                </button>
+                            </form>
+                            <div class="post-rating-count">{{.DislikeCount}}</div>
+                        </div>
+                    </ul>
+                </div>
+                {{end}}
+                <!-- Here you can add comment -->
+                <div class="add-comment-form">
+                    <form method="POST" action="/add-comment">
+                        <input type="hidden" name="post_id" value="{{.ID}}">
+                        <input type="text" name="content" placeholder="make some comment here...">
+                        <button type="submit">add </button>
+                    </form>
+                </div>
+                <!-- End of submit comment form -->
+            </div>
+        </div>
+        <!-- End of cardbox-container -->
+        {{end}}
+        </ul>
+    </section>
+    <footer>
+        <!-- ... (your existing footer content) ... -->
+    </footer>
+</body>
 
 </html>
