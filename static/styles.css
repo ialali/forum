@@ -1,265 +1,266 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
-    scroll-behavior: smooth;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth;
 }
 
 :root {
-    --bg-color: #00b4d8;
-    --second-bg-color: #caf0f8;
-    --text-color: #03045e;
-    --second-color: #0077b6;
-    --main-color: #013a63;
-    --big-font: 5rem;
-    --h2-font: 3rem;
-    --p-font: 1.1rem;
+  --bg-color: #00b4d8;
+  --second-bg-color: #caf0f8;
+  --text-color: #03045e;
+  --second-color: #0077b6;
+  --main-color: #013a63;
+  --big-font: 5rem;
+  --h2-font: 3rem;
+  --p-font: 1.1rem;
 }
 
 nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 15%;
-    border-bottom: 1px solid transparent;
-    transition: all 0.45s ease;
-
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 15%;
+  border-bottom: 1px solid transparent;
+  transition: all 0.45s ease;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .logo {
-    width: 100%;
-    border: 1px solid red;
-    margin-right: 700px;
-    height: auto;
-
+  width: 100%;
+  border: 1px solid red;
+  margin-right: 700px;
+  height: auto;
 }
 
 .navlist {
-    display: flex;
-
+  display: flex;
 }
 
 .navlist a {
-    color: var(--main-color);
-    font-size: 17px;
-    font-weight: 500;
-    margin: 0 25px;
-    transition: all 0.45s ease;
-    font-family: Arial, Helvetica, sans-serif;
+  color: var(--main-color);
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 25px;
+  transition: all 0.45s ease;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .navlist a:hover {
-    color: white;
+  color: white;
 }
 
 .navlist a.active {
-    color: var(--main-color);
+  color: var(--main-color);
 }
 
 .hero {
-    background-color: var(--bg-color);
-    color: var(--main-color);
-    padding: 20px;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  padding: 20px;
 }
 
 .hero h1 {
-    margin-top: 100px;
-    margin-left: 50px;
-    font-size: 3rem;
-    font-family: 'Poppins', sans-serif;
+  margin-top: 100px;
+  margin-left: 50px;
+  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .filter-options h2 {
-    font-size: var(--h2-font);
-    color: var(--main-color);
-    font-family: 'Open Sans', sans-serif;
+  font-size: var(--h2-font);
+  color: var(--main-color);
+  font-family: 'Open Sans', sans-serif;
 }
 
 .filter-options {
-    background-color: var(--bg-color);
-    padding: 20px;
-    text-align: center;
+  background-color: var(--bg-color);
+  padding: 20px;
+  text-align: center;
 }
 
 .filter-options form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .filter-options label,
 .filter-options input,
 .filter-options button,
 .filter-options select {
-    margin: 5px;
+  margin: 5px;
 }
 
 .forum-posts {
-    text-align: left;
-    /* Display posts in a column */
+  text-align: left;
+  /* Display posts in a column */
 }
 
 /*css for mainpage, showing user's post-cards*/
 
 .mainpage-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    /*background-color: #009578;*/
-    padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /*background-color: #009578;*/
+  padding-bottom: 80px;
 }
 
 /*design for filter*/
 .filter-options {
-    min-height: 150px;
-    display: block;
+  min-height: 150px;
+  display: block;
 }
 
 /*design for user posts*/
 .post-container {
-    /*background-color: rgb(0, 51, 128);*/
-    color: black;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: start;
-    padding-top: 65px;
-    align-items: center;
-    height: auto;
-    /* width:auto ;
+  /*background-color: rgb(0, 51, 128);*/
+  color: black;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: start;
+  padding-top: 65px;
+  align-items: center;
+  height: auto;
+  /* width:auto ;
    height: auto;*/
 }
 
 .cardbox-container {
-    background-color: var(--second-bg-color);
+  background-color: var(--second-bg-color);
 
-    border-radius: 6px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-    /*box-shadow: 5px 5px 10px 1px #000000;*/
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    margin: 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  /*box-shadow: 5px 5px 10px 1px #000000;*/
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: 10px;
 }
 
 /*left-side of cardbox-for like dislike*/
 .post-left-column {
-    display: flex;
-    flex-direction: column;
-    margin: 0px 10px;
-    padding: 12px 5px;
-    align-items: center;
-    cursor: default;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 10px;
+  padding: 12px 5px;
+  align-items: center;
+  cursor: default;
+  text-align: center;
 }
 
 .post-left-column-button,
 .post-left-column-count {
-    margin-bottom: 6px;
+  margin-bottom: 6px;
 }
 
-.post-left-column-selected>.post-left-column-button,
-.post-left-column-selected>.post-left-column-count {
-    color: #009578;
+.post-left-column-selected > .post-left-column-button,
+.post-left-column-selected > .post-left-column-count {
+  color: #009578;
 }
 
 .like-dislike-buttons form {
-    margin: 0;
-    /* Remove default form margin */
+  margin: 0;
+  /* Remove default form margin */
 }
 
 .like-dislike-buttons button {
-    background: none;
-    border: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .comment-container .like-dislike-buttons {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .post-left-column-button,
 .post-right-column-button {
-    cursor: pointer;
-    color: #555555;
+  cursor: pointer;
+  color: #555555;
 }
 
 /*right-side of cardbox-for post detail*/
 .post-right-column .material-icons {
-    font-size: 15px;
+  font-size: 15px;
+  margin-left: 10px;
+}
+.post-rating-count {
+  margin-left: 10px;
 }
 
-.post-left-column:not(.post-left-column-selected)>p.ost-left-column-button:hover {
-    color: #000000;
+.post-left-column:not(.post-left-column-selected)
+  > p.ost-left-column-button:hover {
+  color: #000000;
 }
 
 .post-right-column {
-    flex: 1;
-    padding: 12px;
+  flex: 1;
+  padding: 12px;
 }
 
 .post-user-pic {
-    margin: 5px 10px;
+  margin: 5px 10px;
 }
 
 .post-pic {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 5px;
 }
 
 .post-header {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-header h3 {
-    margin: 5px;
+  margin: 5px;
 }
 
 .post-author {
-    text-align: end;
+  text-align: end;
 }
 
 .post-author-handle {
-    color: rgb(112, 107, 107);
-    margin: 0px 5px 5px 5px;
-    font-size: 14px;
+  color: rgb(112, 107, 107);
+  margin: 0px 5px 5px 5px;
+  font-size: 14px;
 }
 
 .post-author-handle span {
-    color: #000000;
-    font-weight: bold;
-    font-size: 14px;
-    margin: 10px 5px 5px 5px;
+  color: #000000;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 10px 5px 5px 5px;
 }
 
 .post-content {
-    line-height: 25px;
-    font-size: 14px;
-    margin: 5px;
-    color: #000000;
+  line-height: 25px;
+  font-size: 14px;
+  margin: 5px;
+  color: #000000;
 }
 
 .post-content h3,
 .post-content p {
-    text-align: left;
-
+  text-align: left;
 }
 
 /* maybe can delete not using now*/
@@ -302,80 +303,77 @@ body {
   maybe use later */
 
 /*for showing comment container*/
-.post-right-column>.comment-container {
-    border-style: double;
-    border: lightblue;
+.post-right-column > .comment-container {
+  border-style: double;
+  border: lightblue;
 }
 
 .speech-bubble {
-    border: 0.5px solid #b8b7b7;
-    padding-left: 5px;
-    border-radius: 5px;
-    margin: 5px;
+  border: 0.5px solid #b8b7b7;
+  padding-left: 5px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 /*end of showing comment container*/
 
-
 /* for adding comment form*/
 .add-comment-form form {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 5px;
 }
 
 .add-comment-form form input {
-    height: 30px;
-    flex: 50px;
+  height: 30px;
+  flex: 50px;
 }
 
 .add-comment-form form button {
-    flex: 1fr;
+  flex: 1fr;
 }
 
-
 textarea #comment {
-    display: block;
+  display: block;
 }
 
 /* for adding comment form*/
 /*end of user post*/
 
-
 /*back-to-top-bottom start*/
 .push-top {
-    position: absolute;
+  position: absolute;
 }
 
 .back-to-top {
-    position: absolute;
-    width: 150px;
-    height: 30px;
+  position: absolute;
+  width: 150px;
+  height: 30px;
 }
 
 #myBtn {
-    display: none;
-    position: fixed;
-    bottom: 95px;
-    right: 30px;
-    z-index: 99;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    background-color: rgb(16, 83, 128);
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 15px;
-    transition: opacity 0.15s;
+  display: none;
+  position: fixed;
+  bottom: 95px;
+  right: 30px;
+  z-index: 99;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: rgb(16, 83, 128);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 15px;
+  transition: opacity 0.15s;
 }
 
 #myBtn:hover {
-    background-color: rgb(99, 96, 96);
-    color: black;
-    font-weight: bold;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  background-color: rgb(99, 96, 96);
+  color: black;
+  font-weight: bold;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 /*end of back-to-top-bottom & end right-content(user-profile・profile-mini・back-to-top-btn)*/
