@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"forum/database"
 	auth "forum/middleware"
+	"log"
 	"net/http"
 	"text/template"
 	"time"
@@ -39,6 +40,7 @@ func RegisterSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Please fill in username or password", http.StatusBadRequest)
 		return // Return to exit the function
 	}
+
 	if auth.IsDuplicateUser(db, username, email) {
 		http.Error(w, "Username or email is already taken", http.StatusConflict)
 		return
@@ -49,18 +51,43 @@ func RegisterSubmitHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, "Registration Failure", http.StatusInternalServerError)
 		return // Return to exit the function
 	}
+
 	sessionToken := uuid.New().String()
 
-	// Set the session token as a cookie in the response
-	http.SetCookie(w, &http.Cookie{
+	mu.Lock()
+	defer mu.Unlock()
+
+	intUserID := int(userID)
+
+	// Check if the user already has an active session
+	if existingSessionID, ok := userSessions[intUserID]; ok {
+		// If so, remove the existing session
+		delete(userSessions, intUserID)
+		log.Printf("Removed existing session for user %d\n", userID)
+		// Also delete the session from the sessions map
+		delete(sessions, existingSessionID)
+	}
+
+	// Store the session ID and user ID in their respective maps
+	userSessions[intUserID] = sessionToken
+	sessions[sessionToken] = intUserID
+	log.Println(sessions)
+	log.Println(sessionToken)
+
+	// Store the session ID in a cookie with an expiration time
+	expiration := time.Now().Add(24 * time.Hour) // 24 hours
+	cookie := http.Cookie{
 		Name:     "session_token",
 		Value:    sessionToken,
-		Expires:  time.Now().Add(24 * time.Hour),
+		Path:     "/",
+		Expires:  expiration,
 		HttpOnly: true,
-		// You can add more settings here like Expires, Secure, HttpOnly, etc.
-	})
+		Secure:   true, // Enable only in production with HTTPS
+	}
 
+	http.SetCookie(w, &cookie)
+
+	// Redirect the user to the home page after successful registration
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	fmt.Println(userID)
-
 }
