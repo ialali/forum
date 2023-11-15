@@ -90,7 +90,7 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 	defer stmt.Close()
 
 	// Get the current timestamp.
-	createdAt := time.Now()
+	createdAt := time.Now().Format("2006-01-02 15:04:05")
 
 	// Execute the SQL statement to insert the new post.
 	_, err = stmt.Exec(userID, title, content, category, createdAt)
@@ -104,9 +104,10 @@ func InsertPost(db *sql.DB, category, title, content string, userID int) error {
 func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
 
-	rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC;")
+	rows, err := db.Query("SELECT posts.id, posts.title, posts.content, posts.category, posts.created_at, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.id DESC;")
 
 	if err != nil {
+		fmt.Println("error querrying database")
 		return nil, err
 	}
 	defer rows.Close()
@@ -114,7 +115,7 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 	for rows.Next() {
 		var post Post
 
-		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Category, &post.Username); err != nil {
+		if err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Category, &post.CreationDate, &post.Username); err != nil {
 
 			return nil, err
 		}
@@ -130,7 +131,7 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 
 func InsertComment(db *sql.DB, postID, userID int, content string) error {
 	_, err := db.Exec("INSERT INTO comments (user_id, post_id, content, creation_date) VALUES (?, ?, ?, ?)",
-		userID, postID, content, time.Now())
+		userID, postID, content, time.Now().Format("2006-01-02 15:04:05"))
 	return err
 }
 func GetCommentsForPost(db *sql.DB, postID int) ([]Comment, error) {
