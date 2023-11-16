@@ -56,7 +56,7 @@ body {
     display: flex;
     margin-right: 20px;
     margin-top: 20px;
-   padding-left: 45px;
+    padding-left: 45px;
     width: 50%;
 }
 
@@ -243,29 +243,43 @@ label[for="liked"] {
     margin: 10px;
 }
 
-/*left-side of cardbox-for like dislike*/
-.post-left-column {
+.like-button,
+.dislike-button {
+    font-size: var(--h3-font);
+    color: var(--text-color);
+}
+
+.like-button:hover,
+.dislike-button:hover {
+    color: white;
+}
+
+.clike-button,
+.cdislike-button {
+    font-size: var(--p-font);
+    color: var(--text-color);
+}
+
+.clike-button:hover,
+.cdislike-button:hover {
+    color: white;
+}
+
+.button-container {
     display: flex;
-    flex-direction: column;
-    margin: 0px 10px;
-    padding: 12px 5px;
     align-items: center;
-    cursor: default;
-    text-align: center;
 }
 
-.post-left-column-button,
-.post-left-column-count {
-    margin-bottom: 6px;
-}
 
-.post-left-column-selected>.post-left-column-button,
-.post-left-column-selected>.post-left-column-count {
-    color: #009578;
+
+.like-dislike-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
 }
 
 .like-dislike-buttons form {
-    margin: 0;
+    margin: 10px;
     /* Remove default form margin */
 }
 
@@ -313,7 +327,7 @@ label[for="liked"] {
 
 .post-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
 .post-header h3 {
@@ -439,10 +453,41 @@ label[for="liked"] {
     width: 70%;
     background-color: var(--3d-bg-color);
     padding-left: 250px;
+    border-radius: 10px;
 }
 
-.add-comment-form form button {
-    flex: 1fr;
+
+
+
+
+/* CSS */
+.add-comment-form button {
+    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    text-decoration: none;
+    width: 10%;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: 10px
+}
+
+.button-43:hover {
+    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+    .button-43 {
+        padding: 1rem 2rem;
+    }
 }
 
 

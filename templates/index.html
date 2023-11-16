@@ -49,7 +49,7 @@
 
             {{if .IsAuthenticated}}
             <li><a href="/create-post" class="create-link"><i class='bx bxs-plus-square'></i> Create Post</a></li>
-            <li><a href="/logout" class="logout-link"><i class='bx bxs-exit' ></i> Logout</a></li>
+            <li><a href="/logout" class="logout-link"><i class='bx bxs-exit'></i> Logout</a></li>
             {{else}}
             <li><a href="/login" class="login-link"><i class='bx bxs-door-open'></i></i> Login</a></li>
             <li><a href="/register" class="register-link"><i class='bx bxs-spreadsheet'></i> Register</a></li>
@@ -69,34 +69,30 @@
         {{range .Posts}}
         <div class="cardbox-container" data-post-id="{{.ID}}">
             <!-- Form for like and dislike -->
-            <div class="post-left-column">
-
-
-                <div class="like-dislike-buttons">
-                    <form method="POST" action="/like-post">
-                        <input type="hidden" name="post_id" value="{{.ID}}">
-                        <input type="hidden" name="action" value="like">
-                        <button type="submit" style="border: none; background-color: transparent;">
-                            <span class="post-rating-button material-icons">thumb_up</span>
-                        </button>
-                        <div class="post-rating-count">{{.LikeCount}}</div>
-                    </form>
-                    <form method="POST" action="/dislike-post">
-                        <input type="hidden" name="post_id" value="{{.ID}}">
-                        <input type="hidden" name="action" value="dislike">
-                        <button type="submit" style="border: none; background-color: transparent;">
-                            <span class="post-rating-button material-icons">thumb_down</span>
-                        </button>
-                        <div class="post-rating-count">{{.DislikeCount}}</div>
-                    </form>
-                </div>
-            </div>
-
             <!-- User posting -->
             <div class="post-right-column">
                 <!-- ... (unchanged) ... -->
                 <div class="post-header">
                     <h3>{{.Title}}</h3>
+                    <div class="like-dislike-buttons">
+                        <div class="button-container">
+                            <form method="POST" action="/like-post">
+                                <input type="hidden" name="post_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="like">
+                                <button type="submit" class="like-button"><i class='bx bxs-heart'></i></button>
+                            </form>
+                            <div class="post-rating-count">{{.LikeCount}}</div>
+                        </div>
+
+                        <div class="button-container">
+                            <form method="POST" action="/dislike-post">
+                                <input type="hidden" name="post_id" value="{{.ID}}">
+                                <input type="hidden" name="action" value="dislike">
+                                <button type="submit" class="dislike-button"><i class='bx bx-heart'></i></button>
+                            </form>
+                            <div class="post-rating-count">{{.DislikeCount}}</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="post-content">
                     <p>{{.Content}}</p>
@@ -124,16 +120,14 @@
                             <form method="POST" action="/like-comment">
                                 <input type="hidden" name="comment_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="like">
-                                <button type="submit">
-                                    <span class="post-rating-button material-icons">thumb_up</span>
+                                <button type="submit" class="clike-button"><i class='bx bxs-heart'></i>
                                 </button>
                             </form>
                             <div class="post-rating-count">{{.LikeCount}}</div>
                             <form method="POST" action="/dislike-comment">
                                 <input type="hidden" name="comment_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="dislike">
-                                <button type="submit">
-                                    <span class="post-rating-button material-icons">thumb_down</span>
+                                <button type="submit" class="cdislike-button"><i class='bx bx-heart'></i>
                                 </button>
                             </form>
                             <div class="post-rating-count">{{.DislikeCount}}</div>
