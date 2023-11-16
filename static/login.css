@@ -20,7 +20,8 @@ svg {
   margin-left: 80px;
 }
 svg:hover {
-  background-color: rgba(49, 187, 218, 0.5);
+  fill: #0077b6;
+  transition: 0.3s;
 }
 
 .flip-container {
@@ -84,3 +85,23 @@ input {
 .flipbutton a:hover {
   color: #2a6f97;
 }
+
+/* -----
+SVG Icons - svgicons.sparkk.fr
+----- */
+/* 
+.svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #4691f6;
+}
+
+.svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
+} */
