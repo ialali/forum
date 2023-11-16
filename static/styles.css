@@ -94,22 +94,21 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.filter-options h2 {
-    font-size: var(--h2-font);
-    color: var(--main-color);
-    font-family: 'Open Sans', sans-serif;
-}
 
 .filter-options {
     display: flex;
     align-items: center;
     height: 70px;
+    width: 80%;
+    padding-left: 150px;
+    margin-left: 100px;
     /* Adjust to the desired height */
 }
 
 .filter-options form {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .filter-options label,
@@ -118,6 +117,39 @@ body {
 .filter-options select {
     margin: 5px;
     height: 30px;
+}
+
+
+.filter-options button {
+  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  text-decoration: none;
+  width: 20%;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  align-items: center;
+}
+.filter-options select{
+    background-color: #2a6f97;
+}
+
+.filter-options button:hover {
+  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+  .button-43 {
+    padding: 1rem 2rem;
+  }
 }
 
 .forum-posts {
@@ -135,11 +167,6 @@ body {
     padding-bottom: 80px;
 }
 
-/*design for filter*/
-.filter-options {
-    min-height: 150px;
-    display: block;
-}
 
 /*design for user posts*/
 .post-container {
@@ -154,6 +181,11 @@ body {
     height: auto;
     /* width:auto ;
    height: auto;*/
+}
+
+.post-container h2 {
+    font-size: var(--h3-font);
+    font-family: 'Poppins';
 }
 
 .cardbox-container {
