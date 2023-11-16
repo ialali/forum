@@ -42,17 +42,35 @@ body {
     color: var(--text-color);
     font-size: 16px;
 }
+ul {
+    list-style: none;
+}
+img {
+    max-width: 100%;
+}
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
 }
+.navbar .navbar-main-menu ul {
+    display: flex;
+}
+.navbar ul li a {
+    padding: 10px 20px;
+    display: block;
+    font-weight: 600;
+    transition: 0.5s;
+}
+.navbar ul li a:hover {
+    color: aliceblue;
+}
 
-.logo {
+/* .logo {
     width: 70px;
     height: 70px;
     border-radius: 19%;
-}
+} */
 /* #nav-left {
     background-color: pink;
     width: 15%;
@@ -256,7 +274,7 @@ body {
 .post-rating-count {
     margin-left: 10px;
 }
-.post-left-column:not(.post-left-column-selected)>p.ost-left-column-button:hover {
+.post-left-column:not(.post-left-column-selected)>post-left-column-button:hover {
     color: #000000;
 }
 
