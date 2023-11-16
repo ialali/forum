@@ -48,7 +48,21 @@ body {
     height: 70px;
     border-radius: 19%;
 }
-
+#nav-left {
+    background-color: pink;
+    width: 15%;
+    float: left;
+}
+#nav-mid {
+    background-color: antiquewhite;
+    width: 50%;
+    margin: 0 auto;
+}
+#nav-right {
+    background-color: orange;
+    width: 34%;
+    float: right;
+}
 .navlist {
     list-style: none;
     display: flex;

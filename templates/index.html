@@ -26,10 +26,10 @@
     <section>
     <nav class="navbar">
         <div class="container">
-            <div class="logo">
+            <div class="logo" id="nav-left">
                 <img src="/static/images/logo.png" alt="logo" width="100" />
             </div>
-            <div class="navbar-filter-options">
+            <div class="navbar-filter-options" id="nav-mid">
                 <form action="/filter" method="GET">
                     <label for="category"></label>
                     <select name="category" id="category">
@@ -47,7 +47,7 @@
                     <button type="submit">Apply Filter</button>
                 </form>
             </div>
-            <div class="navbar-main-menu">
+            <div class="navbar-main-menu" id="nav-right">
                 <ul class="navlist">
                     <li><a href="/">Home</a></li>
                     {{if .IsAuthenticated}}
