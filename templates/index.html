@@ -24,7 +24,25 @@
 
 <body>
     <nav>
-        <img class="logo" src="logo.png" alt="" width="400">
+        <img class="logo" src="/static/images/logo.png" alt="" width="400">
+        <section class="filter-options">
+            <form action="/filter" method="GET">
+                <label for="category"></label>
+                <select name="category" id="category">
+                    <option value="" selected disabled>Categories</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Nutrition">Nutrition</option>
+                    <option value="Recovery">Recovery</option>
+                    <option value="Tech">Tech</option>
+                    <!-- Add options for all available categories -->
+                </select>
+                <label for="created">Created by Me:</label>
+                <input type="checkbox" name="created" id="created" value="true">
+                <label for="liked">Liked by Me:</label>
+                <input type="checkbox" name="liked" id="liked" value="true">
+                <button type="submit">Apply Filter</button>
+            </form>
+        </section>
 
         <ul class="navlist">
             <li><a href="/">Home</a></li>
@@ -43,26 +61,7 @@
     <section class="hero">
         <h1>Welcome to the Forum {{.Username}} !</h1>
     </section>
-    <!------------Filtering Bar--------------->
-    <section class="filter-options">
-        <h2>Filter Posts</h2>
-        <form action="/filter" method="GET">
-            <label for="category">Category:</label>
-            <select name="category" id="category">
-                <option value="" selected disabled>Categories</option>
-                <option value="Sport">Sport</option>
-                <option value="Nutrition">Nutrition</option>
-                <option value="Recovery">Recovery</option>
-                <option value="Tech">Tech</option>
-                <!-- Add options for all available categories -->
-            </select>
-            <label for="created">Created by Me:</label>
-            <input type="checkbox" name="created" id="created" value="true">
-            <label for="liked">Liked by Me:</label>
-            <input type="checkbox" name="liked" id="liked" value="true">
-            <button type="submit">Apply Filter</button>
-        </form>
-    </section>
+    
     <!-- Display a list of forum posts here -->
     <section class="post-container">
         <h2>Latest Posts</h2>

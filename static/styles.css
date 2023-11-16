@@ -33,12 +33,19 @@ nav {
     padding: 10px;
     border-bottom: 1px solid transparent;
     transition: all 0.45s ease;
-
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 19%;
 }
 
 
@@ -94,16 +101,15 @@ body {
 }
 
 .filter-options {
-    background-color: var(--bg-color);
-    padding: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    /* Adjust to the desired height */
 }
 
 .filter-options form {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .filter-options label,
@@ -111,6 +117,7 @@ body {
 .filter-options button,
 .filter-options select {
     margin: 5px;
+    height: 30px;
 }
 
 .forum-posts {
@@ -269,6 +276,7 @@ body {
 .post-content p {
     text-align: left;
     font-size: var(--p-font);
+    font-family: 'Poppins', sans-serif;
 
 }
 
