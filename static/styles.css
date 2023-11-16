@@ -155,7 +155,6 @@ body {
     padding-bottom: 80px;
 }
 
-
 /*design for user posts*/
 .post-container {
     /*background-color: rgb(0, 51, 128);*/
@@ -232,8 +231,11 @@ body {
 /*right-side of cardbox-for post detail*/
 .post-right-column .material-icons {
     font-size: 15px;
+    margin-left: 10px;
 }
-
+.post-rating-count {
+    margin-left: 10px;
+}
 .post-left-column:not(.post-left-column-selected)>p.ost-left-column-button:hover {
     color: #000000;
 }
