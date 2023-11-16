@@ -3,24 +3,42 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/post.css" />
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+    <title>Create Post</title>
 </head>
 
 <body>
     <section class="post-form">
-        <form action="/add-post" method="POST">
-            <select name="category">
-                <option value="" selected disabled>Category</option>
-                <option value="Sport">Sport</option>
-                <option value="Nutrition">Nutrition</option>
-                <option value="Recovery">Recovery</option>
-                <option value="Tech">Tech</option>
-            </select>
-            <input type="text" placeholder="Title" name="title" />
-            <input type="text" placeholder="Content" name="content" />
-            <input type="submit" value="Create new post" />
-        </form>
+        <div class="container">
+                <h2 class="post-content-heading">Create a Post</h2>
+                <p class="post-content-text">Write about something that really interests your from the categories</p>
+                <div class="post-content">
+                    <form action="/add-post" method="POST">
+                        <select name="category">
+                            <option value="" selected disabled>Category</option>
+                            <option value="Sport">Sport</option>
+                            <option value="Nutrition">Nutrition</option>
+                            <option value="Recovery">Recovery</option>
+                            <option value="Tech">Tech</option>
+                        </select>
+                        <div class="post-content-title">
+                            <label for="post-title"></label>
+                            <input type="text" placeholder="Title" id="post-title" name="post-title" />
+                        </div>
+                        <div class="post-content-content">
+                            <label for="post-content-text"></label>
+                            <input type="text" placeholder="Content" id="post-content-text" name="post-content-text" />
+                        </div>
+                        <input type="submit" value="Create new post" />
+                    </form>
+                </div>
+        </div>
     </section>
 
 </body>
