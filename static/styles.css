@@ -383,3 +383,12 @@ textarea #comment {
 }
 
 /*end of back-to-top-bottom & end right-content(user-profile・profile-mini・back-to-top-btn)*/
+
+/* FOOTER */
+svg {
+    width: 26px;
+    height: 26px;
+}
+svg:hover {
+    fill: red;
+}
