@@ -72,7 +72,10 @@ input {
   text-align: center;
 }
 .flipbutton {
-  color: #03045e;
+  color: #333;
   text-decoration: none;
   text-align: left !important;
+}
+.flipbutton a:hover {
+  color: #2a6f97;
 }
