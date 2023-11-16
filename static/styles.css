@@ -18,6 +18,7 @@
     --h2-font: 3rem;
     --h3-font: 2rem;
     --p-font: 1.1rem;
+    --text-sm: 0.8rem;
 }
 
 nav {
@@ -30,7 +31,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 10px 10px 10px;
     border-bottom: 1px solid transparent;
     transition: all 0.45s ease;
 }
@@ -39,8 +40,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    margin: 0;
-    padding: 0;
+    font-size: 16px;
 }
 
 .logo {
@@ -49,16 +49,12 @@ body {
     border-radius: 19%;
 }
 
-
-
-
 .navlist {
     list-style: none;
     display: flex;
     margin-right: 50px;
     margin-top: 20px;
 }
-
 .navlist li {
     margin-left: 10px;
     /* Adjust the margin to your preference */
@@ -93,9 +89,7 @@ body {
     font-size: 3rem;
     font-family: 'Poppins', sans-serif;
 }
-
-
-.filter-options {
+.container .filter-options {
     display: flex;
     align-items: center;
     height: 70px;
@@ -104,23 +98,19 @@ body {
     margin-left: 100px;
     /* Adjust to the desired height */
 }
-
-.filter-options form {
+.container .filter-options form {
     display: flex;
     align-items: center;
     width: 100%;
 }
-
-.filter-options label,
-.filter-options input,
-.filter-options button,
-.filter-options select {
+.container .filter-options label,
+.container .filter-options input,
+.container .filter-options button,
+.container .filter-options select {
     margin: 5px;
     height: 30px;
 }
-
-
-.filter-options button {
+.container .filter-options button {
   background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
   border-radius: .5rem;
   box-sizing: border-box;
@@ -138,11 +128,11 @@ body {
   touch-action: manipulation;
   align-items: center;
 }
-.filter-options select{
+.container .filter-options select{
     background-color: #2a6f97;
 }
 
-.filter-options button:hover {
+.container .filter-options button:hover {
   background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
 }
 
@@ -156,7 +146,6 @@ body {
     text-align: left;
     /* Display posts in a column */
 }
-
 /*css for mainpage, showing user's post-cards*/
 
 .mainpage-container {
@@ -190,7 +179,6 @@ body {
 
 .cardbox-container {
     background-color: var(--second-bg-color);
-
     border-radius: 6px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     /*box-shadow: 5px 5px 10px 1px #000000;*/
@@ -242,7 +230,6 @@ body {
     cursor: pointer;
     color: #555555;
 }
-
 /*right-side of cardbox-for post detail*/
 .post-right-column .material-icons {
     font-size: 15px;
@@ -277,91 +264,43 @@ body {
     margin: 5px;
     font-size: var(--h3-font);
     font-family: 'Poppins', sans-serif;
-
 }
-
 .post-author {
     text-align: end;
 }
-
 .post-author-handle {
     color: rgb(112, 107, 107);
     margin: 0px 5px 5px 5px;
     font-size: 14px;
 }
-
 .post-author-handle span {
     color: #000000;
     font-weight: bold;
     font-size: 14px;
     margin: 10px 5px 5px 5px;
 }
-
 .post-content {
     line-height: 25px;
     font-size: 14px;
     margin: 5px;
     color: #000000;
 }
-
 .post-content h3,
 .post-content p {
     text-align: left;
     font-size: var(--p-font);
     font-family: 'Poppins', sans-serif;
-
 }
 
 .comments-counts {
     font-size: var(--p-font);
     font-family: 'Poppins', sans-serif;
 }
-
-/* maybe can delete not using now*/
-/*.post-nav {
-    display: flex;
-    flex-direction: row;*/
-/*
-    justify-content: space-between;*/
-/*flex-wrap: nowrap;
-    justify-content: end;
-    align-items: end;
-    overflow:hidden;
-  }
-  .md-container{
-    align-items: right;
-    margin-right: 10px;
-  }
-  .icon-container{
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 16px;
-    padding: 4px;
-    text-decoration: none;
-  }
-  .post-icons{
-    width: 20px;
-    height: 20px;
-    margin: 5px;
-    vertical-align: middle;
-  }
-  
-  .icon-label{
-    display: inline-block;
-    line-height: 1;
-    margin: 5px;
-    text-transform: capitalize;
-    vertical-align: middle;
-    color: #000000;
-  }
-  maybe use later */
-
 /*for showing comment container*/
 .post-right-column>.comment-container {
     border-style: double;
     border: lightblue;
 }
-
 .speech-bubble {
     width: auto;
     border: 0.5px solid #b8b7b7;
@@ -370,7 +309,6 @@ body {
     margin: 5px;
     background-color: var(--3d-bg-color);
 }
-
 .speech-bubble p {
     font-size: var(--p-font);
     font-family: 'Poppins', sans-serif;
@@ -378,9 +316,7 @@ body {
     padding-top: 10px;
 
 }
-
 /*end of showing comment container*/
-
 
 /* for adding comment form*/
 .add-comment-form form {
@@ -390,38 +326,30 @@ body {
     margin: 5px;
     padding-left: 200px;
 }
-
 .add-comment-form form input {
     height: 50px;
     width: 70%;
     background-color: var(--3d-bg-color);
     padding-left: 250px;
 }
-
 .add-comment-form form button {
     flex: 1fr;
 }
-
-
 textarea #comment {
     display: block;
 }
-
 /* for adding comment form*/
 /*end of user post*/
-
 
 /*back-to-top-bottom start*/
 .push-top {
     position: absolute;
 }
-
 .back-to-top {
     position: absolute;
     width: 150px;
     height: 30px;
 }
-
 #myBtn {
     display: none;
     position: fixed;
@@ -438,7 +366,6 @@ textarea #comment {
     border-radius: 15px;
     transition: opacity 0.15s;
 }
-
 #myBtn:hover {
     background-color: rgb(99, 96, 96);
     color: black;

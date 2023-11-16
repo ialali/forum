@@ -11,7 +11,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/mainpage.css">
     <script src="/static/script.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
@@ -19,7 +18,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Forum - Main Page</title>
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+    <title>Forum</title>
 </head>
 
 <body>
@@ -63,7 +63,16 @@
 
     <!-----------Welcome Message Design------------>
     <section class="hero">
-        <h1>Welcome to the Forum {{.Username}} !</h1>
+        <div class="container">
+            <div class="hero-content">
+                {{if .IsAuthenticated}}
+                <h1 class="hero-heading">Welcome to the Forum {{.Username}} !</h1>
+                {{else}}
+                <h1 class="hero-heading">Welcome to the Forum Guest!</h1>
+                {{end}}
+                <p class="hero-text">Thank you for joining the fastest growing web commUNITY. This forum is a safe and engaging place to discuss all things; tech, sport, nutrition and recovery. Our motto: Be Kind &amp; Supportive</p>
+            </div>
+        </div>
     </section>
     
     <!-- Display a list of forum posts here -->
@@ -100,6 +109,7 @@
                 <!-- ... (unchanged) ... -->
                 <div class="post-header">
                     <h3>{{.Title}}</h3>
+                    <p>{{.Category}}</p>
                 </div>
                 <div class="post-content">
                     <p>{{.Content}}</p>
