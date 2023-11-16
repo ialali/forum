@@ -9,17 +9,18 @@ import (
 )
 
 func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-	// Check if the user is authenticated
-	userID, isAuthenticated := GetAuthenticatedUserID(r)
-	if !isAuthenticated {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
-	}
-
 	// 1. Parse the filtering criteria from the request.
 	category := r.FormValue("category")
 	created := r.FormValue("created")
 	liked := r.FormValue("liked")
+
+	// Check if the user is authenticated
+	userID, isAuthenticated := GetAuthenticatedUserID(r)
+	if !isAuthenticated && (created == "true" || liked == "true") {
+		// If not authenticated and trying to filter by ownership or liked posts, redirect to login
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
 
 	// Initialize an empty slice to hold filtered posts.
 	var posts []database.Post
@@ -29,33 +30,33 @@ func FilterPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	// 2. Based on the criteria, call the corresponding functions to retrieve the filtered posts.
 	switch {
 	case category != "":
-		// Filter by category
+		// Filter by category for both authenticated and non-authenticated users
 		posts, _ = database.GetPostsByCategory(db, category, userID, createdBool, likedBool)
 
-		// If 'created' is true, filter created posts by the authenticated user
-		if created == "true" {
+		// If 'created' is true, filter created posts for authenticated users
+		if created == "true" && isAuthenticated {
 			userPosts, _ := database.GetOwnedPosts(db, userID)
 			posts = intersection(posts, userPosts)
 		}
 
-		// If 'liked' is true, filter liked posts by the authenticated user
-		if liked == "true" {
+		// If 'liked' is true, filter liked posts for authenticated users
+		if liked == "true" && isAuthenticated {
 			likedPosts, _ := database.GetLikedPosts(db, userID, true)
 			posts = intersection(posts, likedPosts)
 		}
 
 	default:
-		// No category selected, show all posts
+		// No category selected, show all posts for both authenticated and non-authenticated users
 		posts, _ = database.GetPosts(db)
 
-		// If 'created' is true, filter created posts by the authenticated user
-		if created == "true" {
+		// If 'created' is true, filter created posts for authenticated users
+		if created == "true" && isAuthenticated {
 			userPosts, _ := database.GetOwnedPosts(db, userID)
 			posts = intersection(posts, userPosts)
 		}
 
-		// If 'liked' is true, filter liked posts by the authenticated user
-		if liked == "true" {
+		// If 'liked' is true, filter liked posts for authenticated users
+		if liked == "true" && isAuthenticated {
 			likedPosts, _ := database.GetLikedPosts(db, userID, true)
 			posts = intersection(posts, likedPosts)
 		}
