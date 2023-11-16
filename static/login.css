@@ -1,3 +1,19 @@
+/* Alignment styles */
+
+body,
+html {
+  background-color: #2a6f97;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2a6f97;
+  font-family: 'Poppins', sans-serif;
+}
+
 .flip-container {
   perspective: 1000;
 }
@@ -11,7 +27,6 @@
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-
   transition: 0.6s;
   transform-style: preserve-3d;
 }
@@ -24,7 +39,6 @@
   top: 0;
   left: 0;
   right: 0;
-
   backface-visibility: hidden;
 }
 
@@ -53,28 +67,8 @@ input {
 .title {
   text-align: center;
 }
-
 .flipbutton {
   color: #03045e;
   text-decoration: none;
   text-align: left !important;
-}
-
-
-
-/* Alignment styles */
-
-body,
-html {
-  background-color: #2a6f97;
-  height: 100%;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-
-  background: #2a6f97;
 }

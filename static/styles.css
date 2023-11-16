@@ -82,14 +82,13 @@ body {
     padding: 20px;
     text-align: center;
 }
-
 .hero h1 {
     margin-top: 100px;
     margin-left: 50px;
     font-size: 3rem;
     font-family: 'Poppins', sans-serif;
 }
-.container .filter-options {
+.container .navbar-filter-options {
     display: flex;
     align-items: center;
     height: 70px;
@@ -98,19 +97,19 @@ body {
     margin-left: 100px;
     /* Adjust to the desired height */
 }
-.container .filter-options form {
+.container .navbar-filter-options form {
     display: flex;
     align-items: center;
     width: 100%;
 }
-.container .filter-options label,
-.container .filter-options input,
-.container .filter-options button,
-.container .filter-options select {
+.container .navbar-filter-options label,
+.container .navbar-filter-options input,
+.container .navbar-filter-options button,
+.container .navbar-filter-options select {
     margin: 5px;
     height: 30px;
 }
-.container .filter-options button {
+.container .navbar-filter-options button {
   background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
   border-radius: .5rem;
   box-sizing: border-box;
@@ -128,11 +127,11 @@ body {
   touch-action: manipulation;
   align-items: center;
 }
-.container .filter-options select{
+.container .navbar-filter-options select{
     background-color: #2a6f97;
 }
 
-.container .filter-options button:hover {
+.container .navbar-filter-options button:hover {
   background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
 }
 
