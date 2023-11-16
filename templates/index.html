@@ -23,39 +23,43 @@
 </head>
 
 <body>
-    <nav>
-        <img class="logo" src="/static/images/logo.png" alt="" width="400">
-        <section class="filter-options">
-            <form action="/filter" method="GET">
-                <label for="category"></label>
-                <select name="category" id="category">
-                    <option value="" selected disabled>Categories</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Nutrition">Nutrition</option>
-                    <option value="Recovery">Recovery</option>
-                    <option value="Tech">Tech</option>
-                    <!-- Add options for all available categories -->
-                </select>
-                <label for="created">Created by Me:</label>
-                <input type="checkbox" name="created" id="created" value="true">
-                <label for="liked">Liked by Me:</label>
-                <input type="checkbox" name="liked" id="liked" value="true">
-                <button type="submit">Apply Filter</button>
-            </form>
-        </section>
-
-        <ul class="navlist">
-            <li><a href="/">Home</a></li>
-            {{if .IsAuthenticated}}
-            <li><a href="/create-post">Create Post</a></li>
-            <li><a href="/logout">Logout</a></li>
-            {{else}}
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            {{end}}
-        </ul>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="/static/images/logo.png" alt="logo" width="100" />
+            </div>
+            <div class="navbar-filter-options">
+                <form action="/filter" method="GET">
+                    <label for="category"></label>
+                    <select name="category" id="category">
+                        <option value="" selected disabled>Categories</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Nutrition">Nutrition</option>
+                        <option value="Recovery">Recovery</option>
+                        <option value="Tech">Tech</option>
+                        <!-- Add options for all available categories -->
+                    </select>
+                    <label for="created">Created by Me:</label>
+                    <input type="checkbox" name="created" id="created" value="true">
+                    <label for="liked">Liked by Me:</label>
+                    <input type="checkbox" name="liked" id="liked" value="true">
+                    <button type="submit">Apply Filter</button>
+                </form>
+            </div>
+            <div class="navbar-main-menu">
+                <ul class="navlist">
+                    <li><a href="/">Home</a></li>
+                    {{if .IsAuthenticated}}
+                    <li><a href="/create-post">Create Post</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {{else}}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
     </nav>
-
 
     <!-----------Welcome Message Design------------>
     <section class="hero">

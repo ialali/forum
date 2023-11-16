@@ -36,6 +36,7 @@ nav {
 }
 
 body {
+    font-family: 'Poppins', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -69,7 +70,6 @@ body {
     font-weight: 500;
     margin: 0 25px 0;
     transition: all 0.45s ease;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navlist a:hover {
@@ -185,7 +185,7 @@ body {
 
 .post-container h2 {
     font-size: var(--h3-font);
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
 }
 
 .cardbox-container {
@@ -314,7 +314,7 @@ body {
 
 .comments-counts {
     font-size: var(--p-font);
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* maybe can delete not using now*/
@@ -373,7 +373,7 @@ body {
 
 .speech-bubble p {
     font-size: var(--p-font);
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
     padding-left: 20px;
     padding-top: 10px;
 
