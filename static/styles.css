@@ -54,22 +54,26 @@ body {
 .navlist {
     list-style: none;
     display: flex;
-    margin-right: 50px;
+    margin-right: 20px;
     margin-top: 20px;
+   padding-left: 45px;
+    width: 50%;
 }
 
 .navlist li {
     margin-left: 10px;
-    /* Adjust the margin to your preference */
+    margin-bottom: 20px;
+
 }
 
 .navlist a {
+    align-items: center;
     color: var(--main-color);
-    font-size: 17px;
+    font-size: var(--p-font);
     font-weight: 500;
-    margin: 0 25px 0;
+    margin: 0 15px;
     transition: all 0.45s ease;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins';
 }
 
 .navlist a:hover {
@@ -80,9 +84,27 @@ body {
     color: var(--main-color);
 }
 
+.home-link,
+.login-link,
+.logout-link,
+.register-link,
+.create-link {
+    display: flex;
+    align-items: center;
+}
+
+.home-link i,
+.login-link i,
+.logout-link i,
+.create-link i,
+.register-link i {
+    margin-right: 5px;
+}
+
+
 .hero {
     background-color: var(--bg-color);
-    color: var(--main-color);
+    color: var(--text-color);
     padding: 20px;
     text-align: center;
 }
@@ -100,9 +122,13 @@ body {
     align-items: center;
     height: 70px;
     width: 80%;
-    padding-left: 150px;
+    padding-left: 70px;
     margin-left: 100px;
     /* Adjust to the desired height */
+}
+
+select {
+    border: none;
 }
 
 .filter-options form {
@@ -111,45 +137,62 @@ body {
     width: 100%;
 }
 
-.filter-options label,
+
 .filter-options input,
 .filter-options button,
 .filter-options select {
-    margin: 5px;
+    margin: 10px;
     height: 30px;
 }
 
+label[for="created"] {
+    font-size: var(--p-font);
+    font-family: 'Poppins';
+    color: var(--text-color);
+}
+
+label[for="liked"] {
+    font-size: var(--p-font);
+    font-family: 'Poppins';
+}
+
+
 
 .filter-options button {
-  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
-  font-size: 16px;
-  justify-content: center;
-  padding: 1rem 1.75rem;
-  text-decoration: none;
-  width: 20%;
-  border: 0;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  align-items: center;
+    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 1rem 1.75rem;
+    text-decoration: none;
+    width: 20%;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    align-items: center;
+
 }
-.filter-options select{
+
+.filter-options select {
     background-color: #2a6f97;
+    font-size: var(--p-font);
+    font-family: 'Poppins';
+    color: var(--text-color);
 }
 
 .filter-options button:hover {
-  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
 }
 
 @media (min-width: 768px) {
-  .button-43 {
-    padding: 1rem 2rem;
-  }
+    .button-43 {
+        padding: 1rem 2rem;
+    }
 }
 
 .forum-posts {
@@ -171,7 +214,7 @@ body {
 /*design for user posts*/
 .post-container {
     /*background-color: rgb(0, 51, 128);*/
-    color: black;
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

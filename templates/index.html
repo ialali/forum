@@ -45,13 +45,14 @@
         </section>
 
         <ul class="navlist">
-            <li><a href="/">Home</a></li>
+            <li><a href="/" class="home-link"><i class='bx bx-home-circle'></i> Home</a></li>
+
             {{if .IsAuthenticated}}
-            <li><a href="/create-post">Create Post</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="/create-post" class="create-link"><i class='bx bxs-plus-square'></i> Create Post</a></li>
+            <li><a href="/logout" class="logout-link"><i class='bx bxs-exit' ></i> Logout</a></li>
             {{else}}
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="/login" class="login-link"><i class='bx bxs-door-open'></i></i> Login</a></li>
+            <li><a href="/register" class="register-link"><i class='bx bxs-spreadsheet'></i> Register</a></li>
             {{end}}
         </ul>
     </nav>
@@ -61,7 +62,7 @@
     <section class="hero">
         <h1>Welcome to the Forum {{.Username}} !</h1>
     </section>
-    
+
     <!-- Display a list of forum posts here -->
     <section class="post-container">
         <h2>Latest Posts</h2>
