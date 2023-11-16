@@ -47,8 +47,9 @@
   /* for firefox 31 */
   transform: rotateY(0deg);
 }
+
 .front h1 {
-  color:var(--text-color);
+  color: var(--text-color);
   font-size: var(--h2-font);
   font-family: 'Poppins';
 }
@@ -56,17 +57,19 @@
 .back {
   transform: rotateY(180deg);
 }
+
 .back h1 {
-  font-size: var(--h3-font);
+  font-size: var(--h2-font);
   font-family: 'Poppins';
-  color:var(--text-color)
+  color: var(--text-color)
 }
 
 .flip {
   transform: rotateY(180deg);
 }
 
-input {
+input,
+select {
   width: 100%;
   margin-bottom: 15px;
   height: 40px;
@@ -74,9 +77,11 @@ input {
   padding: 10px;
   border-radius: 10px;
 }
+
 input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus {
+input[type="email"]:focus,
+select:focus {
   outline: none;
 }
 
@@ -125,7 +130,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
 
   background: #2a6f97;
+}
+
+.post-form {
+  padding: 30px;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  background: var(--3d-bg-color);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+
+  transition: 0.6s;
+  transform-style: preserve-3d;
 }
