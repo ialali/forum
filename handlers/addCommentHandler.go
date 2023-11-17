@@ -21,6 +21,10 @@ func AddCommentHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			return
 		}
 		content := r.FormValue("content")
+		if content == "" {
+			http.Error(w, "Comment content cannot be empty", http.StatusBadRequest)
+			return
+		}
 		userID, ok := GetAuthenticatedUserID(r)
 		if !ok {
 			http.Error(w, "Unauthorized to use", http.StatusUnauthorized)
