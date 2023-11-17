@@ -172,20 +172,42 @@
         {{end}}
         </ul>
     </section>
-    <footer class="footie" style="max-width: 1000px; margin: 0 auto; padding: 5px 15px; border: 2px solid red;">
+    <footer class="footie" style="background: aquamarine; padding: 15px; border: 2px solid black;">
         <div class="fcontainer">
             <div class="flogo">
-                <a href="index.html">LEFT for a logo</a>
+                <a href="index.html"><img src="/static/images/logo.jpg" alt="flogo"></a>
             </div>
             <div class="ffilter">
-                <p>MID to filter categories</p>
+                <form action="/filter" method="GET">
+                    <label for="category"></label>
+                    <select name="category" id="category">
+                        <option value="" selected disabled>Categories</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Nutrition">Nutrition</option>
+                        <option value="Recovery">Recovery</option>
+                        <option value="Tech">Tech</option>
+                        <!-- Add options for all available categories -->
+                    </select>
+                    <label for="created">Created by Me:</label>
+                    <input type="checkbox" name="created" id="created" value="true">
+                    <label for="liked">Liked by Me:</label>
+                    <input type="checkbox" name="liked" id="liked" value="true">
+                    <button type="submit">Apply Filter</button>
+                </form>
             </div>
             <div class="fmenu">
-                <p>RIGHT menu links ul li</p>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    {{if .IsAuthenticated}}
+                    <li><a href="/create-post">Create Post</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {{else}}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    {{end}}
+                </ul>
             </div>
-        </div>
-        
-        
+        </div>       
     </footer>
 </body>
 

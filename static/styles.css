@@ -422,10 +422,41 @@ textarea #comment {
 /*end of back-to-top-bottom & end right-content(user-profile・profile-mini・back-to-top-btn)*/
 
 /* FOOTER */
-/* svg {
-    width: 26px;
-    height: 26px;
+.footie .fcontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-svg:hover {
-    fill: red;
-} */
+.footie .fmenu ul {
+    display: flex;
+    border: 2px solid orchid;
+}
+.footie ul li a {
+    padding: 10px 20px;
+    display: block;
+    font-weight: 600;
+    transition: 0.5s;
+}
+.footie .flogo {
+    padding: 0 5px;
+    width: 300px;
+    border: 2px solid green;
+}
+.footie .ffilter {
+    display: flex;
+    border: 2px solid #444;
+}
+.footie .ffilter label {
+    padding: 10px 5px 10px 20px;
+    display: inline;
+    font-weight: 600;
+}
+.footie .ffilter button {
+    margin-left: 10px;
+}
+.fcontainer {
+    max-width: 85%;
+    margin: 0 auto;
+    padding: 5px 15px;
+    border: 2px solid red;
+}
