@@ -146,7 +146,51 @@ body {
   -moz-border-radius: 20px;
   border-radius: 20px;
   text-align: center !important;
-
   transition: 0.6s;
   transform-style: preserve-3d;
+}
+
+nav {
+  background-color: #2a6f97;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid transparent;
+  transition: all 0.45s ease;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  height: 80px;
+}
+
+
+.navlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.navlist li {
+  display: inline-block;
+}
+
+.navlist a {
+  align-items: center;
+  color: var(--main-color);
+  font-size: var(--h2-font);
+  font-weight: 500;
+  margin: 0 15px;
+  transition: all 0.45s ease;
+  font-family: 'Poppins';
+  text-decoration: none;
+}
+
+.navlist a:hover {
+  color: white;
+}
+
+.navlist a.active {
+  color: var(--main-color);
 }
