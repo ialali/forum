@@ -98,7 +98,7 @@
                     <p>{{.Content}}</p>
                 </div>
                 <div class="post-author">
-                    <div class="post-author-handle">&#160;&#160;Posted by <span>{{.Username}}</span> {{.CreationDate}}
+                    <div class="post-author-handle">&#160;&#160;Posted by <span>{{.Username}}</span> {{.CreationDate.Format "2006-01-02 15:04:05"}}
                     </div>
                 </div>
 
@@ -112,7 +112,7 @@
                             <p>{{.Content}}</p>
                             <div class="post-author">
                                 <div class="post-author-handle">&#160;&#160;Comment by <span>{{.Username}}</span>
-                                    {{.CreationDate}}</div>
+                                    {{.CreationDate.Format "2006-01-02 15:04:05"}}</div>
                             </div>
                         </div>
                         <!-- Form for like dislike comments for this post -->

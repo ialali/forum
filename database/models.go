@@ -1,5 +1,7 @@
 package database
 
+import "time"
+
 type User struct {
 	ID               int
 	Username         string
@@ -17,7 +19,7 @@ type Post struct {
 	Comments     []Comment
 	LikeCount    int
 	DislikeCount int
-	CreationDate string
+	CreationDate time.Time
 	Username     string
 }
 type Comment struct {
@@ -28,7 +30,7 @@ type Comment struct {
 	Content      string
 	LikeCount    int
 	DislikeCount int
-	CreationDate string
+	CreationDate time.Time
 }
 type Category struct {
 	ID   int
