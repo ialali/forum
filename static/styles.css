@@ -454,6 +454,11 @@ label[for="liked"] {
     background-color: var(--3d-bg-color);
     padding-left: 250px;
     border-radius: 10px;
+
+}
+
+ input[type="text"]:focus {
+    outline: none;
 }
 
 
