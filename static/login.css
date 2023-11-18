@@ -145,6 +145,7 @@ body {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+  text-align: center !important;
 
   transition: 0.6s;
   transform-style: preserve-3d;
