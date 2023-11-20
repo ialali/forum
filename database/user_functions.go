@@ -131,7 +131,7 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 
 func InsertComment(db *sql.DB, postID, userID int, content string) error {
 	_, err := db.Exec("INSERT INTO comments (user_id, post_id, content, creation_date) VALUES (?, ?, ?, ?)",
-		userID, postID, content, time.Now().Format("2006-01-02 15:04:05"))
+		userID, postID, content, time.Now().Format(time.DateTime))
 	return err
 }
 func GetCommentsForPost(db *sql.DB, postID int) ([]Comment, error) {
