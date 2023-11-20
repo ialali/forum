@@ -62,8 +62,8 @@ func main() {
 		handlers.FilterPosts(w, r, db)
 	})
 
-	fmt.Println("server started on http://localhost:1215")
-	http.ListenAndServe(":1215", nil)
+	fmt.Println("server started on http://localhost:1216")
+	http.ListenAndServe(":1216", nil)
 
 	// You can now use the 'db' connection to perform database operations.
 
